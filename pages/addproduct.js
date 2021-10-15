@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { storage, db } from "../firebase";
+import { storage, db } from "./firebase";
 import firebase from "firebase";
+import { useSession } from "next-auth/client";
 
-function MultipleUpload({ username }) {
+function addproduct({ username }) {
+  const [session, loading] = useSession();
   const [images, setImages] = useState([]);
   const [urls, setUrls] = useState([]);
   const [progress, setProgress] = useState("");
@@ -58,7 +60,7 @@ function MultipleUpload({ username }) {
       imageUrl2: urls[1],
       imageUrl3: urls[2],
       imageUrl4: urls[3],
-      username: username,
+      username: session.user.name,
     });
     setProgress(0);
     setMake("");
@@ -125,4 +127,4 @@ function MultipleUpload({ username }) {
   );
 }
 
-export default MultipleUpload;
+export default addproduct;
