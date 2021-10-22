@@ -8,7 +8,7 @@ function MultipleUpload({ username }) {
   const [progress, setProgress] = useState("");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
 
   const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
@@ -17,6 +17,7 @@ function MultipleUpload({ username }) {
       setImages((prevState) => [...prevState, newImage]);
     }
   };
+  console.log(...prevState);
   const handleUpload = () => {
     const promises = [];
     images.map((image) => {
@@ -50,10 +51,10 @@ function MultipleUpload({ username }) {
 
   const postUpload = () => {
     db.collection("posts").add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       make: make,
       model: model,
       price: price,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       imageUrl: urls[0],
       imageUrl2: urls[1],
       imageUrl3: urls[2],
@@ -63,11 +64,11 @@ function MultipleUpload({ username }) {
     setProgress(0);
     setMake("");
     setModel("");
-    setPrice("");
+    setPrice(0);
     setImages([]);
   };
-  console.log("images: ", images);
-  console.log("urls", urls);
+  /* console.log("images: ", images);
+  console.log("urls", urls); */
   return (
     <div className="flex flex-col w-3/5 m-auto border border-gray-700">
       <progress
@@ -78,14 +79,18 @@ function MultipleUpload({ username }) {
       >
         {progress}%
       </progress>
-
       <div className="flex justify-between">
-        <input type="file" multiple onChange={handleChange}></input>
+        <input
+          type="file"
+          id="fileItem"
+          multiple
+          onChange={handleChange}
+        ></input>
         <button
           onClick={handleUpload}
           className="bg-yellow-300 m-0.5 rounded-lg p-0.5"
         >
-          Upload Pictures{" "}
+          Upload Pictures
         </button>
       </div>
       <div className="flex justify-between my-2">
@@ -94,28 +99,27 @@ function MultipleUpload({ username }) {
           placeholder="Enter a make"
           onChange={(event) => setMake(event.target.value)}
           value={make}
-          className="p-2 "
+          className="p-2"
         />
         <input
           type="text"
           placeholder="Enter a model"
           onChange={(event) => setModel(event.target.value)}
           value={model}
-          className="p-2 "
+          className="p-2"
         />
         <input
           type="text"
           placeholder="Enter a price"
           onChange={(event) => setPrice(event.target.value)}
           value={price}
-          className="p-2 "
+          className="p-2"
         />
       </div>
-      <div className="text-center ">
+      <div className="text-center">
         <button
           disabled={!urls[3]}
-          className="bg-lime-300 m-0.5 rounded-lg p-0.5 w-max 
-        "
+          className="bg-lime-300 m-0.5 rounded-lg p-0.5 w-max"
           onClick={postUpload}
         >
           Post product

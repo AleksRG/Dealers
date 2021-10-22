@@ -15,8 +15,8 @@ function addproduct({ username }) {
   const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImage = e.target.files[i];
-      newImage["id"] = Math.random();
-      setImages((prevState) => [...prevState, newImage]);
+      /* newImage["id"] = Math.random(); */
+      setImages((prevState) => [newImage, ...prevState]);
     }
   };
   const handleUpload = () => {
@@ -82,7 +82,12 @@ function addproduct({ username }) {
       </progress>
 
       <div className="flex justify-between">
-        <input type="file" multiple onChange={handleChange}></input>
+        <input
+          type="file"
+          id="fileinput"
+          multiple
+          onChange={handleChange}
+        ></input>
         <button
           onClick={handleUpload}
           className="bg-yellow-300 m-0.5 rounded-lg p-0.5"
