@@ -21,7 +21,7 @@ function MultipleUpload({ username }) {
   const handleUpload = () => {
     const promises = [];
     images.map((image) => {
-      const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+      const uploadTask = storage.ref(`/${username}/${image.name}`).put(image);
       promises.push(uploadTask);
       uploadTask.on(
         "state_change",
@@ -67,8 +67,7 @@ function MultipleUpload({ username }) {
     setPrice(0);
     setImages([]);
   };
-  /* console.log("images: ", images);
-  console.log("urls", urls); */
+
   return (
     <div className="flex flex-col w-3/5 m-auto border border-gray-700">
       <progress

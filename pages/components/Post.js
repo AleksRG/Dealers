@@ -9,6 +9,7 @@ function Post({
   imageUrl2,
   imageUrl3,
   imageUrl4,
+  timestamp,
 }) {
   return (
     <div className="md:flex max-w-[100%] bg-white border border-gray-300 mb-10 shadow-md rounded-sm">
@@ -50,6 +51,9 @@ function Post({
         </div>
         <div className="border-t border-gray-300">
           <h3 className="">{username}</h3>
+          <p className="text-xs text-gray-400">
+            {new Date(timestamp?.toDate()).toLocaleString("bg-BG")}
+          </p>
         </div>
       </div>
     </div>

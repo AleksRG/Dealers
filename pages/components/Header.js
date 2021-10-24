@@ -1,5 +1,6 @@
 import { getSession, signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
+import { useState, useEffect } from "react";
 import {
   RiEBikeFill,
   RiRoadsterFill,
@@ -9,9 +10,10 @@ import {
 } from "react-icons/ri";
 import { FaTractor, FaShuttleVan, FaCaravan } from "react-icons/fa";
 
-function Header({}) {
+function Header() {
   const [session] = useSession();
   const router = useRouter();
+  const [type, setType] = useState("");
 
   return (
     <div className="flex justify-between bg-white object-contain p-3.5 border-b border-gray-300 h-12 items-center">
@@ -28,16 +30,37 @@ function Header({}) {
       </a>
       <div className="flex text-2xl space-x-2 ">
         <RiEBikeFill
+          className="cursor-pointer transition duration-100 transform hover:scale-125"
+          onClick={() => router.push("/moto")}
+        />
+        <RiRoadsterFill
+          className="cursor-pointer transition duration-100 transform hover:scale-125"
+          onClick={() => router.push("/moto")}
+        />
+        <FaShuttleVan
           className=" cursor-pointer transition duration-100 transform hover:scale-125"
           onClick={() => router.push("/moto")}
         />
-        <RiRoadsterFill className=" cursor-pointer transition duration-100 transform hover:scale-125" />
-        <FaShuttleVan className=" cursor-pointer transition duration-100 transform hover:scale-125" />
-        <RiTruckLine className=" cursor-pointer transition duration-100 transform hover:scale-125" />
-        <FaTractor className=" cursor-pointer transition duration-100 transform hover:scale-125" />
-        <RiSailboatLine className=" cursor-pointer transition duration-100 transform hover:scale-125" />
-        <FaCaravan className=" cursor-pointer transition duration-100 transform hover:scale-125" />
-        <RiSettings3Fill className=" cursor-pointer transition duration-100 transform hover:scale-125" />
+        <RiTruckLine
+          className="cursor-pointer transition duration-100 transform hover:scale-125"
+          onClick={() => router.push("/moto")}
+        />
+        <FaTractor
+          className="cursor-pointer transition duration-100 transform hover:scale-125"
+          onClick={() => router.push("/moto")}
+        />
+        <RiSailboatLine
+          className="cursor-pointer transition duration-100 transform hover:scale-125"
+          onClick={() => router.push("/moto")}
+        />
+        <FaCaravan
+          className="cursor-pointer transition duration-100 transform hover:scale-125"
+          onClick={() => router.push("/moto")}
+        />
+        <RiSettings3Fill
+          className="cursor-pointer transition duration-100 transform hover:scale-125"
+          onClick={() => router.push("/test")}
+        />
       </div>
 
       <div className="flex items-center">

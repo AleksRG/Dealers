@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import Post from "./components/Post";
 import { db } from "./firebase";
-import { getSession, signIn, signOut, useSession } from "next-auth/client";
-
 import Header from "./components/Header";
+
 function moto() {
+  const [x, setX] = useState("moto");
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    db.collection("moto")
+    db.collection(`${x}`)
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setPosts(
@@ -15,10 +15,11 @@ function moto() {
         );
       });
   }, []);
-
+  console.log(x);
   return (
     <div className="bg-[#fafafa] h-screen">
       <Header />
+      {/* <button onClick={() => setX("posts")}>xxxzx</button> */}
       <div className="flex flex-col items-center p-2">
         {posts.map(({ id, post }) => (
           <Post
