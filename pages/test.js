@@ -6,9 +6,10 @@ import Post from "./components/Post";
 
 function test() {
   const [posts, setPosts] = useState([]);
+  const [type, setType] = useState("moto");
   /* const [loading, setLoading] = useState(false); */
 
-  const ref = db.collection("moto");
+  const ref = db.collection(type);
 
   // GER POST FUNCTION
   function getPosts() {
@@ -59,6 +60,7 @@ function test() {
             imageUrl2={post.imageUrl2}
             imageUrl3={post.imageUrl3}
             imageUrl4={post.imageUrl4}
+            timestamp={post.timestamp}
           />
         ))}
       </div>
@@ -71,6 +73,18 @@ function test() {
         </button>
         <button className="bg-blue-400 p-1 rounded-xs text-center items-center">
           edit
+        </button>
+        <button
+          className="bg-yellow-400 p-1 rounded-xs text-center items-center"
+          onClick={() => setType("posts")}
+        >
+          all products
+        </button>
+        <button
+          className="bg-lime-400 p-1 rounded-xs text-center items-center"
+          onClick={() => setType("moto")}
+        >
+          moto
         </button>
       </div>
     </div>

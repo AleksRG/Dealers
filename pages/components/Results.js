@@ -4,17 +4,22 @@ import { db } from "../firebase";
 
 function Results({ type }) {
   const [posts, setPosts] = useState([]);
-  console.log(posts);
-  useEffect(() => {
-    db.collection(`${type}`)
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
-        );
-      });
-  }, []);
+  const ref = db.collection(type).orderBy("timestamp", "desc");
 
+  // GET POST FUNCTION
+  function getPosts() {
+    ref.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.docs.map((doc) => {
+        items.push({ id: doc.id, post: doc.data() });
+      });
+      setPosts(items);
+    });
+  }
+
+  useEffect(() => {
+    getPosts();
+  });
   return (
     <div className="flex flex-col items-center p-2">
       {posts.map(({ id, post }) => (

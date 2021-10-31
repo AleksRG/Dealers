@@ -13,7 +13,6 @@ import { FaTractor, FaShuttleVan, FaCaravan } from "react-icons/fa";
 function Header() {
   const [session] = useSession();
   const router = useRouter();
-  const [type, setType] = useState("");
 
   return (
     <div className="flex justify-between bg-white object-contain p-3.5 border-b border-gray-300 h-12 items-center">

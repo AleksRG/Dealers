@@ -4,18 +4,15 @@ import { db } from "./firebase";
 import Header from "./components/Header";
 
 function moto() {
-  const [x, setX] = useState("moto");
   const [posts, setPosts] = useState([]);
+  const ref = db.collection("moto").orderBy("timestamp", "desc");
+
   useEffect(() => {
-    db.collection(`${x}`)
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
-        );
-      });
+    ref.onSnapshot((snapshot) => {
+      setPosts(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+    });
   }, []);
-  console.log(x);
+
   return (
     <div className="bg-[#fafafa] h-screen">
       <Header />
@@ -32,6 +29,7 @@ function moto() {
             imageUrl2={post.imageUrl2}
             imageUrl3={post.imageUrl3}
             imageUrl4={post.imageUrl4}
+            timestamp={post.timestamp}
           />
         ))}
       </div>
