@@ -21,7 +21,7 @@ function MultipleUpload({ username }) {
   const handleUpload = () => {
     const promises = [];
     images.map((image) => {
-      const uploadTask = storage.ref(`/${username}/${image.name}`).put(image);
+      const uploadTask = storage.ref(`/images/${image.name}`).put(image);
       promises.push(uploadTask);
       uploadTask.on(
         "state_change",

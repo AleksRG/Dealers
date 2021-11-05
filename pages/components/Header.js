@@ -1,6 +1,5 @@
 import { getSession, signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
-import { useState, useEffect } from "react";
 import {
   RiEBikeFill,
   RiRoadsterFill,
@@ -13,7 +12,6 @@ import { FaTractor, FaShuttleVan, FaCaravan } from "react-icons/fa";
 function Header() {
   const [session] = useSession();
   const router = useRouter();
-  const [type, setType] = useState("");
 
   return (
     <div className="flex justify-between bg-white object-contain p-3.5 border-b border-gray-300 h-12 items-center">
@@ -55,7 +53,7 @@ function Header() {
         />
         <FaCaravan
           className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          onClick={() => router.push("/test")}
         />
         <RiSettings3Fill
           className="cursor-pointer transition duration-100 transform hover:scale-125"

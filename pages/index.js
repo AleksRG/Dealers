@@ -7,10 +7,7 @@ import Results from "./components/Results";
 
 export default function Home() {
   const router = useRouter();
-
-  const [x, setX] = useState("posts");
   const [session] = useSession();
-  console.log(x);
 
   return (
     <div>
@@ -36,7 +33,7 @@ export default function Home() {
               " "
             )}
             {/*  <button onClick={() => setX("moto")}>xxxzx</button> */}
-            <Results type={x} />
+            <Results />
           </div>
         </div>
       </main>

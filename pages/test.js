@@ -6,11 +6,12 @@ import Post from "./components/Post";
 
 function test() {
   const [posts, setPosts] = useState([]);
+  const [base, setBase] = useState("posts");
   /* const [loading, setLoading] = useState(false); */
 
-  const ref = db.collection("moto");
+  const ref = db.collection(`${base}`);
 
-  // GER POST FUNCTION
+  // GET POST FUNCTION
   function getPosts() {
     ref.onSnapshot((querySnapshot) => {
       const items = [];
@@ -71,6 +72,18 @@ function test() {
         </button>
         <button className="bg-blue-400 p-1 rounded-xs text-center items-center">
           edit
+        </button>
+        <button
+          className="bg-lime-400 p-1 rounded-xs text-center items-center"
+          onClick={() => setBase("moto")}
+        >
+          set to moto
+        </button>
+        <button
+          className="bg-yellow-400 p-1 rounded-xs text-center items-center"
+          onClick={() => setBase("posts")}
+        >
+          set to posts
         </button>
       </div>
     </div>
