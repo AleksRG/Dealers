@@ -1,5 +1,6 @@
-import { getSession, signIn, signOut, useSession } from "next-auth/client";
+import { signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
+
 import {
   RiEBikeFill,
   RiRoadsterFill,
@@ -53,7 +54,7 @@ function Header() {
         />
         <FaCaravan
           className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/test")}
+          onClick={() => router.push("/moto")}
         />
         <RiSettings3Fill
           className="cursor-pointer transition duration-100 transform hover:scale-125"

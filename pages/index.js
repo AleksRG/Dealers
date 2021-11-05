@@ -1,9 +1,7 @@
-import Head from "next/head";
-import { useState } from "react";
 import { getSession, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
+import Head from "next/head";
 import Header from "./components/Header";
-import Results from "./components/Results";
 
 export default function Home() {
   const router = useRouter();
@@ -32,8 +30,7 @@ export default function Home() {
             ) : (
               " "
             )}
-            {/*  <button onClick={() => setX("moto")}>xxxzx</button> */}
-            <Results />
+            <div className="flex items-center"> </div>
           </div>
         </div>
       </main>
@@ -43,7 +40,6 @@ export default function Home() {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-
   return {
     props: { session },
   };

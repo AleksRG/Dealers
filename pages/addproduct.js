@@ -11,7 +11,9 @@ function addproduct({ username }) {
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
-
+  const today = new Date();
+  const time =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImage = e.target.files[i];
@@ -22,7 +24,9 @@ function addproduct({ username }) {
   const handleUpload = () => {
     const promises = [];
     images.map((image) => {
-      const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+      const uploadTask = storage
+        .ref(`/images/${image.name + session.user.name + time}`)
+        .put(image);
       promises.push(uploadTask);
       uploadTask.on(
         "state_change",
@@ -39,7 +43,7 @@ function addproduct({ username }) {
         async () => {
           await storage
             .ref("images")
-            .child(image.name)
+            .child(image.name + session.user.name + time)
             .getDownloadURL()
             .then((url) => {
               setUrls((prevState) => [...prevState, url]);
