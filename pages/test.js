@@ -7,15 +7,8 @@ import ComboBox from "./components/CimboBox";
 function test() {
   const [posts, setPosts] = useState([]);
   const [type, setType] = useState("moto");
-<<<<<<< HEAD
+
   const [ref, setRef] = useState(db.collection(type));
-
-  /*  const ref = db.collection(type); */
-=======
-  /* const [loading, setLoading] = useState(false); */
-
-  const ref = db.collection(type);
->>>>>>> 85410a4120116dc85078012b82202944d15a061c
 
   // GER POST FUNCTION
   function getPosts() {
@@ -131,32 +124,6 @@ function test() {
           />
         ))}
       </div>
-<<<<<<< HEAD
-=======
-      <div className="bg-gray-200 m-8 flex justify-between p-2  text-center items-center">
-        <button
-          className="bg-red-400 p-1 rounded-xs text-center items-center"
-          onClick={() => deletePost(posts[1])}
-        >
-          delete
-        </button>
-        <button className="bg-blue-400 p-1 rounded-xs text-center items-center">
-          edit
-        </button>
-        <button
-          className="bg-yellow-400 p-1 rounded-xs text-center items-center"
-          onClick={() => setType("posts")}
-        >
-          all products
-        </button>
-        <button
-          className="bg-lime-400 p-1 rounded-xs text-center items-center"
-          onClick={() => setType("moto")}
-        >
-          moto
-        </button>
-      </div>
->>>>>>> 85410a4120116dc85078012b82202944d15a061c
     </div>
   );
 }
