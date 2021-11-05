@@ -30,16 +30,8 @@ export default function Home() {
             ) : (
               " "
             )}
-<<<<<<< HEAD
-            <div className="flex items-center"> </div>
-=======
 
-            <div className="flex items-center">
-              <Results type={"moto"} />
-              <Results type={"posts"} />
-              <Results type={"trucks"} />
-            </div>
->>>>>>> 85410a4120116dc85078012b82202944d15a061c
+            <div className="flex items-center"> </div>
           </div>
         </div>
       </main>
