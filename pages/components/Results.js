@@ -16,12 +16,12 @@ function Results({ type }) {
       setPosts(items);
     });
   }
-
-  useEffect(() => {
+  getPosts();
+  /* useEffect(() => {
     getPosts();
-  });
+  }); */
   return (
-    <div className="flex flex-col items-center p-2">
+    <div className="flex flex-col items-center p-2 ">
       {posts.map(({ id, post }) => (
         <Post
           key={id}

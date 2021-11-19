@@ -2,6 +2,11 @@ import { useState } from "react";
 import { storage, db } from "./firebase";
 import firebase from "firebase";
 import { useSession } from "next-auth/client";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import { MdCameraAlt } from "react-icons/md";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
 
 function addproduct({ username }) {
   const [session, loading] = useSession();
@@ -11,6 +16,7 @@ function addproduct({ username }) {
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
+
   const today = new Date();
   const time =
     today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -74,29 +80,46 @@ function addproduct({ username }) {
   };
   console.log("images: ", images);
   console.log("urls", urls);
+  const Input = styled("input")({
+    display: "none",
+  });
   return (
-    <div className="flex flex-col w-3/5 m-auto border border-gray-700">
-      <progress
-        className="w-full m-0.5 pr-1"
-        id="file"
-        max="100"
-        value={progress}
-      >
-        {progress}%
-      </progress>
-
+    <div className="flex flex-col w-[80%] m-auto mt-7 border border-gray-300">
       <div className="flex justify-between">
-        <input
-          type="file"
-          id="fileinput"
-          multiple
-          onChange={handleChange}
-        ></input>
+        <label htmlFor="icon-button-file" className="mr-8">
+          <Input
+            accept="image/*"
+            id="icon-button-file"
+            multiple
+            type="file"
+            onChange={handleChange}
+          />
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+            <MdCameraAlt className="text-blue-700" />
+          </IconButton>
+        </label>
+
+        <div className="flex items-center justify-center">
+          <CircularProgress variant="determinate" value={progress} />
+          <Typography
+            variant="caption"
+            component="div"
+            color="text.secondary"
+            position="absolute"
+          >
+            {`${Math.round(progress)}%`}
+          </Typography>
+        </div>
+
         <button
           onClick={handleUpload}
-          className="bg-yellow-300 m-0.5 rounded-lg p-0.5"
+          className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
         >
-          Upload Pictures{" "}
+          Upload{" "}
         </button>
       </div>
       <div className="flex justify-between my-2">
@@ -125,8 +148,7 @@ function addproduct({ username }) {
       <div className="text-center ">
         <button
           disabled={!urls[3]}
-          className="bg-lime-300 m-0.5 rounded-lg p-0.5 w-max 
-        "
+          className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
           onClick={postUpload}
         >
           Post product

@@ -2,6 +2,7 @@ import { getSession, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import Header from "./components/Header";
+import Results from "./components/Results";
 
 export default function Home() {
   const router = useRouter();
@@ -31,7 +32,11 @@ export default function Home() {
               " "
             )}
 
-            <div className="flex items-center"> </div>
+            <div className="flex items-center">
+              {/*  <Results type={"moto"} />
+              <Results type={"posts"} />
+              <Results type={"trucks"} /> */}
+            </div>
           </div>
         </div>
       </main>

@@ -30,7 +30,7 @@ function Header() {
       <div className="flex text-2xl space-x-2 ">
         <RiEBikeFill
           className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          onClick={() => router.push("/new")}
         />
         <RiRoadsterFill
           className="cursor-pointer transition duration-100 transform hover:scale-125"
@@ -66,12 +66,14 @@ function Header() {
         {session ? (
           <>
             <h2>Welcome {session.user.name}</h2>
-            <button
-              className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-              onClick={signOut}
-            >
-              Sign Out
-            </button>
+            {
+              <button
+                className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
+                onClick={signOut}
+              >
+                Sign Out
+              </button>
+            }
             <img
               className="rounded-full h-10 cursor-pointer transition duration-150 transform hover:scale-110"
               src={session.user.image}

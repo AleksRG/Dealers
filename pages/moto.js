@@ -5,7 +5,7 @@ function moto() {
   return (
     <div className="bg-[#fafafa] h-screen">
       <Header />
-      <Results type={"moto"} />;
+      <Results type={"posts"} />
     </div>
   );
 }
