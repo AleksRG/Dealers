@@ -84,12 +84,12 @@ function New() {
   };
 
   return (
-    <div className="bg-[#fafafa]  ">
+    <div className="min-h-screen bg-[#f6f8fa]">
       <Header />
       <div className="grid md:flex">
         <div className="p-2">
           <div className="text-center">
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]">
+            <FormControl className="w-48 m-1 bg-[#FFFFFF] ">
               <InputLabel id="search-make">Make</InputLabel>
               <Select
                 labelId="search-make"
@@ -179,6 +179,9 @@ function New() {
                     imageUrl3={post.imageUrl3}
                     imageUrl4={post.imageUrl4}
                     timestamp={post.timestamp}
+                    horsepower={post.horsepower}
+                    year={post.year}
+                    kilometers={post.kilometers}
                   />
                 ))
             : posts
@@ -200,6 +203,9 @@ function New() {
                     imageUrl3={post.imageUrl3}
                     imageUrl4={post.imageUrl4}
                     timestamp={post.timestamp}
+                    horsepower={post.horsepower}
+                    year={post.year}
+                    kilometers={post.kilometers}
                   />
                 ))}
         </div>

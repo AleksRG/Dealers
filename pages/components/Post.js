@@ -10,10 +10,13 @@ function Post({
   imageUrl3,
   imageUrl4,
   timestamp,
+  horsepower,
+  year,
+  kilometers,
 }) {
   return (
-    <div className="md:flex bg-[#FFFFFF] border border-gray-300 mb-10 shadow-md rounded-sm max-w-5xl">
-      <div className="md:w-[65%] flex p-[1px]">
+    <div className="md:flex bg-[#ffffff] mb-10 border  rounded-sm max-w-5xl ">
+      <div className="md:w-[65%] flex p-[1px] ">
         <div className="flex w-[76.6%] relative min-w-[100px] ">
           <Image src={imageUrl} layout="fill" objectFit="cover" />
         </div>
@@ -41,15 +44,22 @@ function Post({
           />
         </div>
       </div>
-      <div className="flex flex-col bg-white md:w-[35%] justify-between p-2  ">
+      <div className="flex flex-col bg-white md:w-[35%] justify-between p-2 ">
         <div className="">
           <div className="text-xl font-mono font-bold">{price}€</div>
           <div className="flex space-x-1 font-mono ">
-            <h3>{make}</h3>
-            <h3>{model}</h3>
+            <h3>
+              {make} {model}
+            </h3>
+          </div>
+          <div className="flex space-x-2 font-mono font-bold relative">
+            <p>
+              {horsepower}Hp {year}year {kilometers}km{" "}
+            </p>
           </div>
         </div>
-        <div className="border-t border-gray-300">
+
+        <div className="border-t ">
           <h3 className="">{username}</h3>
           <p className="text-xs text-gray-400">
             {new Date(timestamp?.toDate()).toLocaleString("bg-BG")}

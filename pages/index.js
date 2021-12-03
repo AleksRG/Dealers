@@ -15,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-[#fafafa] h-screen">
+      <main className="bg-[#f6f8fa] h-screen">
         <Header />
         <div className="flex justify-center">
           <div className="">

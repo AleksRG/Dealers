@@ -7,6 +7,12 @@ import IconButton from "@mui/material/IconButton";
 import { MdCameraAlt } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
+import dataTest from "./dataTest.json";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 
 function addproduct({ username }) {
   const [session, loading] = useSession();
@@ -16,6 +22,25 @@ function addproduct({ username }) {
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
+  const [modelList, setModelList] = useState([]);
+  const [kilometers, setKilometers] = useState("");
+  const [year, setYear] = useState("");
+  const [horsepower, setHorsepower] = useState("");
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 15;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 192,
+      },
+    },
+  };
+  const modelResult = (e) => {
+    setMake(e.target.value);
+    setModelList(dataTest.find((x) => x.name === e.target.value).model);
+  };
 
   const today = new Date();
   const time =
@@ -27,6 +52,7 @@ function addproduct({ username }) {
       setImages((prevState) => [newImage, ...prevState]);
     }
   };
+
   const handleUpload = () => {
     const promises = [];
     images.map((image) => {
@@ -58,10 +84,11 @@ function addproduct({ username }) {
       );
     });
     Promise.all(progress).catch((err) => console.log(err));
+    setImages([]);
   };
 
   const postUpload = () => {
-    db.collection("posts").add({
+    db.collection("moto").add({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       make: make,
       model: model,
@@ -71,20 +98,26 @@ function addproduct({ username }) {
       imageUrl3: urls[2],
       imageUrl4: urls[3],
       username: session.user.name,
+      kilometers: kilometers,
+      year: year,
+      horsepower: horsepower,
     });
     setProgress(0);
     setMake("");
     setModel("");
     setPrice("");
     setImages([]);
+    setKilometers("");
+    setYear("");
+    setHorsepower("");
   };
-  console.log("images: ", images);
-  console.log("urls", urls);
+
   const Input = styled("input")({
     display: "none",
   });
+
   return (
-    <div className="flex flex-col w-[80%] m-auto mt-7 border border-gray-300">
+    <div className="flex flex-col w-[80%] p-4 m-auto mt-7 border rounded-lg border-gray-300">
       <div className="flex justify-between">
         <label htmlFor="icon-button-file" className="mr-8">
           <Input
@@ -93,6 +126,7 @@ function addproduct({ username }) {
             multiple
             type="file"
             onChange={handleChange}
+            onClick={(e) => (e.target.value = null)}
           />
           <IconButton
             color="primary"
@@ -119,33 +153,120 @@ function addproduct({ username }) {
           onClick={handleUpload}
           className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
         >
-          Upload{" "}
+          Upload
         </button>
       </div>
-      <div className="flex justify-between my-2">
-        <input
-          type="text"
-          placeholder="Enter a make"
-          onChange={(event) => setMake(event.target.value)}
-          value={make}
-          className="p-2 "
-        />
-        <input
-          type="text"
-          placeholder="Enter a model"
-          onChange={(event) => setModel(event.target.value)}
-          value={model}
-          className="p-2 "
-        />
-        <input
-          type="text"
-          placeholder="Enter a price"
+      <div className="flex justify-between my-2 items-center">
+        <FormControl className="w-48 m-1 bg-[#FFFFFF]">
+          <InputLabel id="search-make">Make</InputLabel>
+          <Select
+            labelId="search-make"
+            label="Make"
+            value={make}
+            onChange={modelResult}
+            MenuProps={MenuProps}
+          >
+            {dataTest.map((x, index) => (
+              <MenuItem key={index} value={x.name}>
+                {`${x.name}`}{" "}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl className="w-48 m-1 bg-[#FFFFFF]">
+          <InputLabel id="search-model">Model</InputLabel>
+          <Select
+            labelId="search-model"
+            label="Model"
+            value={model}
+            /* onChange={modelFilter} */
+            onChange={(event) => setModel(event.target.value)}
+            MenuProps={MenuProps}
+          >
+            {modelList.map((x, index) => (
+              <MenuItem key={index} value={x.name}>
+                {`${x.name}`}{" "}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <TextField
+          className="w-48 m-1 bg-[#FFFFFF]"
+          label="Price"
+          id="Price"
+          type="number"
+          InputProps={{ inputProps: { min: 0 } }}
+          onPaste={(e) => {
+            e.preventDefault();
+          }}
+          onKeyDown={(e) =>
+            ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+          }
           onChange={(event) => setPrice(event.target.value)}
           value={price}
-          className="p-2 "
         />
       </div>
-      <div className="text-center ">
+      <div className="flex justify-between my-2 items-center">
+        <TextField
+          className="w-48 m-1 bg-[#FFFFFF]"
+          label="Horsepower"
+          id="Horsepower"
+          type="number"
+          InputProps={{ inputProps: { min: 0 } }}
+          onPaste={(e) => {
+            e.preventDefault();
+          }}
+          onKeyDown={(e) =>
+            ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+          }
+          onChange={(event) => setHorsepower(event.target.value)}
+          value={horsepower}
+        />
+
+        <TextField
+          className="w-48 m-1 bg-[#FFFFFF]"
+          label="Year"
+          id="Year"
+          type="number"
+          InputProps={{ inputProps: { min: 0 } }}
+          onPaste={(e) => {
+            e.preventDefault();
+          }}
+          onKeyDown={(e) =>
+            ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+          }
+          onChange={(event) => setYear(event.target.value)}
+          value={year}
+        />
+
+        <TextField
+          className="w-48 m-1 bg-[#FFFFFF]"
+          label="Kilometers"
+          id="Kilometers"
+          type="number"
+          InputProps={{ inputProps: { min: 0 } }}
+          onPaste={(e) => {
+            e.preventDefault();
+          }}
+          onKeyDown={(e) =>
+            ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+          }
+          onChange={(event) => setKilometers(event.target.value)}
+          value={kilometers}
+        />
+      </div>
+
+      <TextField
+        id="outlined-multiline-static"
+        label="Description"
+        multiline
+        rows={4}
+        defaultValue="No description"
+      />
+
+      <div className="text-center">
         <button
           disabled={!urls[3]}
           className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
@@ -153,6 +274,16 @@ function addproduct({ username }) {
         >
           Post product
         </button>
+      </div>
+      <div className="flex justify-center">
+        {images.map((x) => (
+          <img
+            src={URL.createObjectURL(x)}
+            width={100}
+            height={100}
+            objectFit="cover"
+          ></img>
+        ))}
       </div>
     </div>
   );

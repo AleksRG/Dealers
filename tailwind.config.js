@@ -21,6 +21,9 @@ module.exports = {
       amber: colors.amber,
       fuchsia: colors.fuchsia,
       bluegray: colors.blueGray,
+      pink: colors.pink,
+      indigo: colors.indigo,
+      sky: colors.sky,
     },
   },
   variants: {
