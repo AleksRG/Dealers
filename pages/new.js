@@ -86,9 +86,9 @@ function New() {
   return (
     <div className="min-h-screen bg-[#f6f8fa]">
       <Header />
-      <div className="grid md:flex">
+      <div className="grid md:flex justify-center">
         <div className="p-2">
-          <div className="text-center">
+          <div className="text-center lg:grid">
             <FormControl className="w-48 m-1 bg-[#FFFFFF] ">
               <InputLabel id="search-make">Make</InputLabel>
               <Select
@@ -122,7 +122,7 @@ function New() {
               </Select>
             </FormControl>
           </div>
-          <div className="text-center">
+          <div className="text-center lg:grid">
             <FormControl className="w-48 m-1 bg-[#FFFFFF]">
               <InputLabel id="set-min-price">Min price</InputLabel>
               <Select

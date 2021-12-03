@@ -261,6 +261,10 @@ function addproduct({ username }) {
       <TextField
         id="outlined-multiline-static"
         label="Description"
+        sx={{
+          width: 500,
+          maxWidth: "100%",
+        }}
         multiline
         rows={4}
         defaultValue="No description"
