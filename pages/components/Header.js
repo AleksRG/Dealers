@@ -65,7 +65,7 @@ function Header() {
       <div className="flex items-center">
         {session ? (
           <>
-            <h2 className="">Welcome {session.user.name}</h2>
+            <h2 className="hidden md:inline">Welcome {session.user.name}</h2>
             {
               <button
                 className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"

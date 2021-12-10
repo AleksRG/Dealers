@@ -2,7 +2,6 @@ import { getSession, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import Header from "./components/Header";
-import Results from "./components/Results";
 
 export default function Home() {
   const router = useRouter();
@@ -17,27 +16,20 @@ export default function Home() {
 
       <main className="bg-[#f6f8fa] h-screen">
         <Header />
-        <div className="flex justify-center">
-          <div className="">
-            {session ? (
-              <div className="text-center mt-2">
-                <button
-                  className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-                  onClick={() => router.push("/addproduct")}
-                >
-                  Add product
-                </button>
-              </div>
-            ) : (
-              " "
-            )}
 
-            <div className="flex items-center">
-              {/*  <Results type={"moto"} />
-              <Results type={"posts"} />
-              <Results type={"trucks"} /> */}
+        <div className="flex justify-center">
+          {session ? (
+            <div className="text-center mt-2">
+              <button
+                className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
+                onClick={() => router.push("/addproduct")}
+              >
+                Add product
+              </button>
             </div>
-          </div>
+          ) : (
+            "You must login to add products"
+          )}
         </div>
       </main>
     </div>

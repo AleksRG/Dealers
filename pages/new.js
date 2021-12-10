@@ -20,6 +20,7 @@ function New() {
   const [modelList, setModelList] = useState([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const router = useRouter();
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 15;
@@ -88,10 +89,11 @@ function New() {
       <Header />
       <div className="grid md:flex justify-center">
         <div className="p-2">
-          <div className="text-center lg:grid">
-            <FormControl className="w-48 m-1 bg-[#FFFFFF] ">
-              <InputLabel id="search-make">Make</InputLabel>
+          <div className="text-center flex md:grid justify-center">
+            <FormControl className="m-1">
+              <InputLabel id="search-maker">Make</InputLabel>
               <Select
+                className="w-36 h-12 bg-[#FFFFFF] items-center"
                 labelId="search-make"
                 label="Make"
                 value={make}
@@ -105,9 +107,10 @@ function New() {
                 ))}
               </Select>
             </FormControl>
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]">
+            <FormControl className="m-1">
               <InputLabel id="search-model">Model</InputLabel>
               <Select
+                className="w-36 h-12 bg-[#FFFFFF] items-center"
                 labelId="search-model"
                 label="Model"
                 value={model}
@@ -123,9 +126,10 @@ function New() {
             </FormControl>
           </div>
           <div className="text-center lg:grid">
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]">
+            <FormControl className="m-1">
               <InputLabel id="set-min-price">Min price</InputLabel>
               <Select
+                className="w-36 h-12 bg-[#FFFFFF] items-center"
                 labelId="set-min-price"
                 label="Min price"
                 value={minPrice}
@@ -139,9 +143,10 @@ function New() {
                 ))}
               </Select>
             </FormControl>
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]">
+            <FormControl className="m-1">
               <InputLabel id="set-max-price">Max price</InputLabel>
               <Select
+                className="w-36 h-12 bg-[#FFFFFF] items-center"
                 labelId="set-max-price"
                 label="Max price"
                 value={maxPrice}
@@ -194,6 +199,7 @@ function New() {
                 .map(({ id, post }) => (
                   <Post
                     key={id}
+                    id={id}
                     username={post.username}
                     make={post.make}
                     model={post.model}

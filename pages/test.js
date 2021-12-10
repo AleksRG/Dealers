@@ -3,11 +3,6 @@ import Header from "./components/Header";
 import { db } from "./firebase";
 import Post from "./components/Post";
 
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-
 function test() {
   const [posts, setPosts] = useState([]);
   const [type, setType] = useState("moto");
