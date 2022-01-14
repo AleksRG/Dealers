@@ -1,6 +1,7 @@
 import { getSession, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
+import FirstBanner from "./components/FirstBanner";
 import Header from "./components/Header";
 
 export default function Home() {
@@ -14,10 +15,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-[#f6f8fa] h-screen">
+      <main className="bg-[#ffffff] ">
         <Header />
-
-        <div className="flex justify-center">
+        <div className="flex justify-center ">
           {session ? (
             <div className="text-center mt-2">
               <button
@@ -28,9 +28,10 @@ export default function Home() {
               </button>
             </div>
           ) : (
-            "You must login to add products"
+            ""
           )}
         </div>
+        <FirstBanner />
       </main>
     </div>
   );

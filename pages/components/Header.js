@@ -15,14 +15,14 @@ function Header() {
   const router = useRouter();
 
   return (
-    <div className="sticky top-0 z-50 bg-[#f6f8fa] flex justify-between bg-white object-contain p-3.5 border-b border-gray-300 h-12 items-center">
+    <div className="sticky top-0 z-50 bg-[#ffffff] flex justify-between object-contain p-3.5 border-b border-gray-300 h-12 items-center">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link
         href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap"
         rel="stylesheet"
       />
       <a
-        className="text-3xl font-satisfy font-bold cursor-pointer"
+        className="text-xl md:text-3xl font-satisfy font-bold cursor-pointer"
         onClick={() => router.push("/")}
       >
         dealers
@@ -30,59 +30,62 @@ function Header() {
       <div className="flex text-2xl space-x-2 ">
         <RiEBikeFill
           className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/new")}
+          onClick={() => router.push("/moto")}
         />
         <RiRoadsterFill
-          className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          className="text-gray-300 transition duration-100 transform hover:scale-125"
+          /*  onClick={() => router.push("/moto")} */
         />
         <FaShuttleVan
-          className=" cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          className="text-gray-300 transition duration-100 transform hover:scale-125"
+          /* onClick={() => router.push("/moto")} */
         />
         <RiTruckLine
-          className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          className="text-gray-300 transition duration-100 transform hover:scale-125"
+          /* onClick={() => router.push("/moto")} */
         />
         <FaTractor
-          className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          className="text-gray-300 transition duration-100 transform hover:scale-125"
+          /* onClick={() => router.push("/moto")} */
         />
         <RiSailboatLine
-          className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          className="text-gray-300 transition duration-100 transform hover:scale-125"
+          /* onClick={() => router.push("/moto")} */
         />
         <FaCaravan
-          className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/moto")}
+          className="text-gray-300 transition duration-100 transform hover:scale-125"
+          /* onClick={() => router.push("/moto")} */
         />
         <RiSettings3Fill
-          className="cursor-pointer transition duration-100 transform hover:scale-125"
-          onClick={() => router.push("/test")}
+          className="text-gray-300 transition duration-100 transform hover:scale-125"
+          /*  onClick={() => router.push("/moto")} */
         />
       </div>
 
       <div className="flex items-center">
         {session ? (
           <>
-            <h2 className="hidden md:inline">Welcome {session.user.name}</h2>
-            {
+            <h2 className="hidden md:inline font-satisfy text-xl font-bold">
+              welcome {/* {session.user.name} */}
+            </h2>
+            {/* {
               <button
                 className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
                 onClick={signOut}
               >
                 Sign Out
               </button>
-            }
+            } */}
             <img
-              className="rounded-full h-10 cursor-pointer transition duration-150 transform hover:scale-110"
+              className="rounded-full h-8 md:h-10 cursor-pointer transition duration-150 transform hover:scale-110"
               src={session.user.image}
+              onClick={signOut}
             />
           </>
         ) : (
           <>
             <button
-              className="border border-gray-300 m-0.5 rounded-sm px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
+              className="border border-gray-300 m-0.5 rounded-sm px-2 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
               onClick={signIn}
             >
               Sign In

@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import { MdCameraAlt } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
-import dataTest from "./dataTest.json";
+import dataMoto from "./dataMoto.json";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -18,7 +18,7 @@ function addproduct({ username }) {
   const [session, loading] = useSession();
   const [images, setImages] = useState([]);
   const [urls, setUrls] = useState([]);
-  const [progress, setProgress] = useState("");
+  const [progress, setProgress] = useState(0);
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
@@ -39,7 +39,7 @@ function addproduct({ username }) {
   };
   const modelResult = (e) => {
     setMake(e.target.value);
-    setModelList(dataTest.find((x) => x.name === e.target.value).model);
+    setModelList(dataMoto.find((x) => x.name === e.target.value).model);
   };
 
   const today = new Date();
@@ -48,7 +48,6 @@ function addproduct({ username }) {
   const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImage = e.target.files[i];
-      /* newImage["id"] = Math.random(); */
       setImages((prevState) => [newImage, ...prevState]);
     }
   };
@@ -89,7 +88,10 @@ function addproduct({ username }) {
 
   const postUpload = () => {
     db.collection("moto").add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp:
+        /* firebase.firestore.FieldValue.serverTimestamp() */ today.toLocaleString(
+          "en-GB"
+        ),
       make: make,
       model: model,
       price: price,
@@ -166,7 +168,7 @@ function addproduct({ username }) {
             onChange={modelResult}
             MenuProps={MenuProps}
           >
-            {dataTest.map((x, index) => (
+            {dataMoto.map((x, index) => (
               <MenuItem key={index} value={x.name}>
                 {`${x.name}`}{" "}
               </MenuItem>
