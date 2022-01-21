@@ -1,38 +1,32 @@
 import { db } from "../firebase";
-import Image from "next/image";
+import Header from "../components/Header";
+
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 
 function Details({ product }) {
   return (
-    <div className="p-10">
-      <h1>{`${product.make} ${product.model} -> ${product.price} €`} </h1>
-      <Image
-        className="w-full"
-        src={`${product.imageUrl}`}
-        width={400}
-        height={200}
-        objectFit="cover"
-      />
-      <Image
-        className="w-full"
-        src={`${product.imageUrl2}`}
-        width={400}
-        height={200}
-        objectFit="cover"
-      />
-      <Image
-        className="w-full"
-        src={`${product.imageUrl3}`}
-        width={400}
-        height={200}
-        objectFit="cover"
-      />
-      <Image
-        className="w-full"
-        src={`${product.imageUrl4}`}
-        width={400}
-        height={200}
-        objectFit="cover"
-      />
+    <div>
+      <Header />
+      <div className="relative flex flex-col m-auto max-w-4xl">
+        <Carousel>
+          <div className="flex h-[560px] items-center">
+            <img src={`${product.imageUrl}`} />
+          </div>
+          <div className="flex h-[560px] items-center">
+            <img src={`${product.imageUrl2}`} />
+          </div>
+          <div className="flex  h-[560px] items-center" objectFit="cover">
+            <img src={`${product.imageUrl3}`} />
+          </div>
+          <div className="flex h-[560px] items-center">
+            <img src={`${product.imageUrl4}`} />
+          </div>
+        </Carousel>
+        <h1>
+          {`${product.make} ${product.model} ${product.year} - ${product.price}€ - ${product.username} ${product.timestamp}`}{" "}
+        </h1>
+      </div>
     </div>
   );
 }

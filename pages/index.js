@@ -17,7 +17,7 @@ export default function Home() {
 
       <main className="bg-[#ffffff] ">
         <Header />
-        <div className="flex justify-center ">
+        {/*  <div className="flex justify-center ">
           {session ? (
             <div className="text-center mt-2">
               <button
@@ -30,7 +30,7 @@ export default function Home() {
           ) : (
             ""
           )}
-        </div>
+        </div> */}
         <FirstBanner />
       </main>
     </div>

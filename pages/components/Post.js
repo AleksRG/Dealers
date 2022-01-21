@@ -77,12 +77,11 @@ function Post({
           Showrooms, or from our London collection location. Considering Part
           Exchanging your existing motorbike? Just visit our website, enter the
           details of your current motorbike and we'll provide you with a price
-          to change. With over 2,000
+          to change.
         </div>
         <div className="border-t flex justify-between text-center text-xs text-gray-400">
-          <h3 className="">{username}</h3>
-          {/* <p>{new Date(timestamp?.toDate()).toLocaleString("bg-BG")}</p>{" "} */}
-          {timestamp}
+          <p className="">{username}</p>
+          <p>{timestamp}</p>
         </div>
       </div>
     </div>

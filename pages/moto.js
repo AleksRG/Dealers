@@ -1,23 +1,23 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Header from "./components/Header";
 import { db } from "./firebase";
 import Post from "./components/Post";
+import AddMoto from "./components/AddMoto";
 import dataMoto from "./dataMoto.json";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useSession } from "next-auth/client";
+import { makeStyles } from "@material-ui/styles";
 
 function New({ items }) {
-  const [posts, setPosts] = useState([]);
-  const type = "moto";
-  const ref = db.collection(type).orderBy("timestamp", "desc");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [modelList, setModelList] = useState([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-
+  const [session] = useSession();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 15;
   const MenuProps = {
@@ -29,28 +29,6 @@ function New({ items }) {
     },
   };
 
-  /* console.log(items); */
-
-  // GET POST FUNCTION
-  /*   function getPosts() {
-    ref.onSnapshot((querySnapshot) => {
-      const items = [];
-      querySnapshot.docs.map((doc) => {
-        items.push({ id: doc.id, post: doc.data() });
-      });
-      setPosts(items);
-    });
-  }
-  console.log(posts);
-
-  useEffect(() => {
-    let isMounted = true;
-    getPosts();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
- */
   const makeFilter = (event) => {
     setMake(event.target.value);
     if (event.target.value == "All") setMake("");
@@ -88,16 +66,49 @@ function New({ items }) {
     setMaxPrice(e.target.value);
   };
 
+  const useStyles = makeStyles({
+    customOutline: {
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgb()",
+      },
+      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgb(14 165 233)",
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgb(56 189 248)",
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+        color: "",
+      },
+      "& .MuiOutlinedInput-input": {
+        color: "",
+      },
+      "& .MuiInputLabel-root": {
+        color: "",
+      },
+      "& .MuiInputLabel-root.Mui-focused": {
+        color: "rgb(14 165 233)",
+      },
+    },
+  });
+  const classes = useStyles();
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <Header />
+      {session ? <AddMoto /> : ""}
       <div className="grid md:flex justify-center">
         <div className="p-2">
-          <div className="text-center flex md:grid justify-center">
-            <FormControl className="m-1">
-              <InputLabel id="search-maker">Make</InputLabel>
+          <div className="flex md:grid justify-center">
+            <FormControl
+              className="m-1"
+              size="small"
+              classes={{ root: classes.customOutline }}
+            >
+              <InputLabel id="search-maker" className="text-gray-900">
+                Make
+              </InputLabel>
               <Select
-                className="w-36 h-12 items-center"
+                className="w-36 items-center"
                 labelId="search-make"
                 label="Make"
                 value={make}
@@ -111,10 +122,16 @@ function New({ items }) {
                 ))}
               </Select>
             </FormControl>
-            <FormControl className="m-1">
-              <InputLabel id="search-model">Model</InputLabel>
+            <FormControl
+              className="m-1"
+              size="small"
+              classes={{ root: classes.customOutline }}
+            >
+              <InputLabel id="search-model" className="text-gray-900">
+                Model
+              </InputLabel>
               <Select
-                className="w-36 h-12 items-center"
+                className="w-36 items-center"
                 labelId="search-model"
                 label="Model"
                 value={model}
@@ -130,10 +147,16 @@ function New({ items }) {
             </FormControl>
           </div>
           <div className="text-center lg:grid">
-            <FormControl className="m-1">
-              <InputLabel id="set-min-price">Min price</InputLabel>
+            <FormControl
+              className="m-1"
+              size="small"
+              classes={{ root: classes.customOutline }}
+            >
+              <InputLabel id="set-min-price" className="text-gray-900">
+                Min price
+              </InputLabel>
               <Select
-                className="w-36 h-12 items-center"
+                className="w-36 items-center"
                 labelId="set-min-price"
                 label="Min price"
                 value={minPrice}
@@ -147,10 +170,16 @@ function New({ items }) {
                 ))}
               </Select>
             </FormControl>
-            <FormControl className="m-1">
-              <InputLabel id="set-max-price">Max price</InputLabel>
+            <FormControl
+              className="m-1"
+              size="small"
+              classes={{ root: classes.customOutline }}
+            >
+              <InputLabel id="set-max-price" className="text-gray-900">
+                Max price
+              </InputLabel>
               <Select
-                className="w-36 h-12 items-center"
+                className="w-36 items-center"
                 labelId="set-max-price"
                 label="Max price"
                 value={maxPrice}
@@ -168,6 +197,7 @@ function New({ items }) {
             </FormControl>
           </div>
         </div>
+
         <div className="flex flex-col items-center p-2">
           {!make
             ? !minPrice
