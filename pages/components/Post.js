@@ -56,7 +56,7 @@ function Post({
       </div>
       <div className="flex flex-col bg-white md:w-[35%] justify-between p-2 ">
         <div className="flex justify-between relative">
-          <div className="font-mono font-bold ">{price}€</div>
+          <div className="font-mono font-bold">{price}€</div>
           <div className="space-x-1 font-mono font-bold relative text-right">
             <h3>
               {make} {model}
