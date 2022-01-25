@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import { storage, db } from "../pages/firebase";
+import { storage, db } from "/firebase";
 import { useSession } from "next-auth/client";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";

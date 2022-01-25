@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "../components/Header";
-import { db } from "./firebase";
+import { db } from "/firebase";
 import Post from "../components/Post";
 import AddMoto from "../components/AddMoto";
 import dataMoto from "./dataMoto.json";
