@@ -30,6 +30,9 @@ function addMoto() {
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
   const [phone2, setPhone2] = useState("");
+  const [gearbox, setGearbox] = useState("");
+  const [fuel, setFuel] = useState("");
+  const [cooling, setCooling] = useState("");
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 15;
@@ -102,7 +105,10 @@ function addMoto() {
       kilometers: kilometers,
       year: year,
       horsepower: horsepower,
+      gearbox: gearbox,
       location: location,
+      fuel: fuel,
+      cooling: cooling,
       phone: phone,
       phone2: phone2,
     });
@@ -114,10 +120,17 @@ function addMoto() {
     setKilometers("");
     setYear("");
     setHorsepower("");
+    setGearbox("");
     setLocation("");
+    setFuel("");
+    setCooling("");
     setPhone("");
     setPhone2("");
   };
+
+  const gearboxType = ["Manuel", "Automatic", "Semi-automatic"];
+  const fuelType = ["Petrol", "Diesel", "Electric", "Hybrid"];
+  const coolingType = ["Liquid Cooled", "Air Cooled"];
 
   const Input = styled("input")({
     display: "none",
@@ -277,6 +290,58 @@ function addMoto() {
               onChange={(event) => setKilometers(event.target.value)}
               value={kilometers}
             />
+          </div>
+          <div className="flex justify-between my-2 items-center">
+            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+              <InputLabel id="choise-gearbox">Gearbox</InputLabel>
+              <Select
+                labelId="choise-gearbox"
+                label="Gearbox"
+                value={gearbox}
+                onChange={(event) => setGearbox(event.target.value)}
+                MenuProps={MenuProps}
+              >
+                {gearboxType.map((x, index) => (
+                  <MenuItem key={index} value={x}>
+                    {`${x}`}{" "}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+              <InputLabel id="choise-gearbox">Fuel </InputLabel>
+              <Select
+                labelId="choise-fuel"
+                label="Fuel"
+                value={fuel}
+                onChange={(event) => setFuel(event.target.value)}
+                MenuProps={MenuProps}
+              >
+                {fuelType.map((x, index) => (
+                  <MenuItem key={index} value={x}>
+                    {`${x}`}{" "}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+              <InputLabel id="choise-gearbox">Cooling </InputLabel>
+              <Select
+                labelId="choise-cooling"
+                label="Cooling"
+                value={fuel}
+                onChange={(event) => setFuel(event.target.value)}
+                MenuProps={MenuProps}
+              >
+                {coolingType.map((x, index) => (
+                  <MenuItem key={index} value={x}>
+                    {`${x}`}{" "}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <TextField
             className="my-2 m-1"

@@ -6,6 +6,7 @@ function Post({
   make,
   model,
   price,
+  description,
   imageUrl,
   imageUrl2,
   imageUrl3,
@@ -18,7 +19,8 @@ function Post({
 }) {
   const router = useRouter();
   const seeMore = (reference) => {
-    router.push(`/details/${reference}`);
+    /* router.push(`/details/${reference}`); */
+    window.open(`/details/${reference}`);
   };
 
   return (
@@ -54,7 +56,7 @@ function Post({
           />
         </div>
       </div>
-      <div className="flex flex-col bg-white md:w-[35%] justify-between p-2 ">
+      <div className="flex flex-col bg-white md:w-[35%] justify-between p-2">
         <div className="flex justify-between relative">
           <div className="font-mono font-bold">{price}€</div>
           <div className="space-x-1 font-mono font-bold relative text-right">
@@ -65,19 +67,11 @@ function Post({
         </div>{" "}
         <div className="flex space-x-2 font-mono relative border-b">
           <p>
-            {horsepower}Hp {year}year {kilometers}km{" "}
+            {horsepower}hp {year}year {kilometers}km{" "}
           </p>
         </div>
         <div className="h-12 leading-4 md:h-24 lg:h-32 overflow-hidden ">
-          RESERVE NOW ONLINE! APPLY ONLINE NOW, as getting onboard your next
-          motorbike has never been so easy and affordable. We offer motorbike
-          specific PCP, HP and Loans from all the leading lenders, simply visit
-          our website now to get a quote. Get this motorbike delivered or
-          arrange to collect it from either our Donington Park or Cheshire
-          Showrooms, or from our London collection location. Considering Part
-          Exchanging your existing motorbike? Just visit our website, enter the
-          details of your current motorbike and we'll provide you with a price
-          to change.
+          {description}
         </div>
         <div className="border-t flex justify-between text-center text-xs text-gray-400">
           <p className="">{username}</p>

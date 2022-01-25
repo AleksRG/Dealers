@@ -223,6 +223,7 @@ function New({ items }) {
                       horsepower={post.horsepower}
                       year={post.year}
                       kilometers={post.kilometers}
+                      description={post.description}
                     />
                   ))
               : items
@@ -248,6 +249,7 @@ function New({ items }) {
                       horsepower={post.horsepower}
                       year={post.year}
                       kilometers={post.kilometers}
+                      description={post.description}
                     />
                   ))
             : items
@@ -278,6 +280,7 @@ function New({ items }) {
                     horsepower={post.horsepower}
                     year={post.year}
                     kilometers={post.kilometers}
+                    description={post.description}
                   />
                 ))}
         </div>
