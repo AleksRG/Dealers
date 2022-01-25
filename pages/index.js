@@ -1,8 +1,8 @@
 import { getSession, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import FirstBanner from "./components/FirstBanner";
-import Header from "./components/Header";
+import FirstBanner from "../components/FirstBanner";
+import Header from "../components/Header";
 
 export default function Home() {
   const router = useRouter();

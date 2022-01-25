@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Header from "./components/Header";
+import Header from "../components/Header";
 import { db } from "./firebase";
-import Post from "./components/Post";
-import AddMoto from "./components/AddMoto";
+import Post from "../components/Post";
+import AddMoto from "../components/AddMoto";
 import dataMoto from "./dataMoto.json";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";

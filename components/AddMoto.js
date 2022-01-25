@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Image from "next/image";
-import { storage, db } from "../firebase";
+import { storage, db } from "../pages/firebase";
 import { useSession } from "next-auth/client";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import { MdCameraAlt } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
-import dataMoto from "../dataMoto.json";
+import dataMoto from "../pages/dataMoto.json";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
