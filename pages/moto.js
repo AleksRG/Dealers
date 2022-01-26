@@ -10,8 +10,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useSession } from "next-auth/client";
 import { makeStyles } from "@material-ui/styles";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import { BiSearch } from "react-icons/bi";
+import Button from "@mui/material/Button";
 
 function New({ items }) {
+  const [anchorEl, setAnchorEl] = useState(null);
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [modelList, setModelList] = useState([]);
@@ -28,6 +33,16 @@ function New({ items }) {
       },
     },
   };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   const makeFilter = (event) => {
     setMake(event.target.value);
@@ -95,114 +110,133 @@ function New({ items }) {
   return (
     <div className="min-h-screen">
       <Header />
-      {session ? <AddMoto /> : ""}
-      <div className="grid md:flex justify-center">
-        <div className="m-2">
-          <div className="flex md:grid justify-center ">
-            <div className="m-1">
-              <FormControl
-                size="small"
-                classes={{ root: classes.customOutline }}
-              >
-                <InputLabel id="search-maker" className="text-gray-900">
-                  Make
-                </InputLabel>
-                <Select
-                  className="w-36 items-center"
-                  labelId="search-make"
-                  label="Make"
-                  value={make}
-                  onChange={makeFilter}
-                  MenuProps={MenuProps}
+      <div className="flex justify-center py-3 space-x-2">
+        <Button
+          onClick={handleClick}
+          className="shadow-md hover:bg-gray-100 rounded-full "
+        >
+          <BiSearch className="text-gray-900 h-5 w-5" />
+        </Button>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            {" "}
+            <div className="flex justify-center ">
+              <div className="m-1">
+                <FormControl
+                  size="small"
+                  classes={{ root: classes.customOutline }}
                 >
-                  {dataMoto.map((x, index) => (
-                    <MenuItem key={index} value={x.name}>
-                      {`${x.name}`}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                  <InputLabel id="search-maker" className="text-gray-900">
+                    Make
+                  </InputLabel>
+                  <Select
+                    className="w-36 items-center"
+                    labelId="search-make"
+                    label="Make"
+                    value={make}
+                    onChange={makeFilter}
+                    MenuProps={MenuProps}
+                  >
+                    {dataMoto.map((x, index) => (
+                      <MenuItem key={index} value={x.name}>
+                        {`${x.name}`}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="m-1">
+                <FormControl
+                  size="small"
+                  classes={{ root: classes.customOutline }}
+                >
+                  <InputLabel id="search-model" className="text-gray-900">
+                    Model
+                  </InputLabel>
+                  <Select
+                    className="w-36 items-center"
+                    labelId="search-model"
+                    label="Model"
+                    value={model}
+                    onChange={modelFilter}
+                    MenuProps={MenuProps}
+                  >
+                    {modelList.map((x, index) => (
+                      <MenuItem key={index} value={x.name}>
+                        {`${x.name}`}{" "}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
             </div>
-            <div className="m-1">
-              <FormControl
-                size="small"
-                classes={{ root: classes.customOutline }}
-              >
-                <InputLabel id="search-model" className="text-gray-900">
-                  Model
-                </InputLabel>
-                <Select
-                  className="w-36 items-center"
-                  labelId="search-model"
-                  label="Model"
-                  value={model}
-                  onChange={modelFilter}
-                  MenuProps={MenuProps}
+            <div className="flex justify-center">
+              <div className="m-1">
+                <FormControl
+                  size="small"
+                  classes={{ root: classes.customOutline }}
                 >
-                  {modelList.map((x, index) => (
-                    <MenuItem key={index} value={x.name}>
-                      {`${x.name}`}{" "}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <div className="flex md:grid justify-center">
-            <div className="m-1">
-              <FormControl
-                size="small"
-                classes={{ root: classes.customOutline }}
-              >
-                <InputLabel id="set-min-price" className="text-gray-900">
-                  Min price
-                </InputLabel>
-                <Select
-                  className="w-36 items-center"
-                  labelId="set-min-price"
-                  label="Min price"
-                  value={minPrice}
-                  onChange={minPriceFilter}
-                  MenuProps={MenuProps}
-                >
-                  {a.map((x, index) => (
-                    <MenuItem key={index} value={x}>
-                      {`${x}`}{" "}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="m-1">
-              <FormControl
-                size="small"
-                classes={{ root: classes.customOutline }}
-              >
-                <InputLabel id="set-max-price" className="text-gray-900">
-                  Max price
-                </InputLabel>
-                <Select
-                  className="w-36 items-center"
-                  labelId="set-max-price"
-                  label="Max price"
-                  value={maxPrice}
-                  onChange={maxPriceFilter}
-                  MenuProps={MenuProps}
-                >
-                  {a
-                    .filter((x) => x > minPrice)
-                    .map((x, index) => (
+                  <InputLabel id="set-min-price" className="text-gray-900">
+                    Min price
+                  </InputLabel>
+                  <Select
+                    className="w-36 items-center"
+                    labelId="set-min-price"
+                    label="Min price"
+                    value={minPrice}
+                    onChange={minPriceFilter}
+                    MenuProps={MenuProps}
+                  >
+                    {a.map((x, index) => (
                       <MenuItem key={index} value={x}>
                         {`${x}`}{" "}
                       </MenuItem>
                     ))}
-                </Select>
-              </FormControl>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="m-1">
+                <FormControl
+                  size="small"
+                  classes={{ root: classes.customOutline }}
+                >
+                  <InputLabel id="set-max-price" className="text-gray-900">
+                    Max price
+                  </InputLabel>
+                  <Select
+                    className="w-36 items-center"
+                    labelId="set-max-price"
+                    label="Max price"
+                    value={maxPrice}
+                    onChange={maxPriceFilter}
+                    MenuProps={MenuProps}
+                  >
+                    {a
+                      .filter((x) => x > minPrice)
+                      .map((x, index) => (
+                        <MenuItem key={index} value={x}>
+                          {`${x}`}{" "}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center p-2">
+          </Typography>
+        </Popover>
+        {session ? <AddMoto /> : ""}{" "}
+      </div>
+      <div className="grid md:flex justify-center">
+        <div className="flex flex-col items-center ">
           {!make
             ? !minPrice
               ? items

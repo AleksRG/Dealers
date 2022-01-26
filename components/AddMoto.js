@@ -3,16 +3,19 @@ import Image from "next/image";
 import { storage, db } from "/firebase";
 import { useSession } from "next-auth/client";
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
 import { MdCameraAlt } from "react-icons/md";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import dataMoto from "../pages/dataMoto.json";
+import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
-import dataMoto from "../pages/dataMoto.json";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import Popover from "@mui/material/Popover";
+import Button from "@mui/material/Button";
 
 function addMoto() {
   const [see, setSee] = useState(false);
@@ -33,6 +36,16 @@ function addMoto() {
   const [gearbox, setGearbox] = useState("");
   const [fuel, setFuel] = useState("");
   const [cooling, setCooling] = useState("");
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 15;
@@ -136,419 +149,396 @@ function addMoto() {
     display: "none",
   });
   return (
-    <div className="flex justify-center pt-2">
-      {!see ? (
-        <button
-          className="border border-blue-400 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-          onClick={() => setSee(true)}
-        >
-          Add product
-        </button>
-      ) : (
-        ""
-      )}
-      {see ? (
-        <div className="flex flex-col w-[100%] max-w-3xl  m-auto mt-7 border-b border-gray-300">
-          <div className="flex justify-between">
-            <label htmlFor="icon-button-file" className="mr-8">
-              <Input
-                accept="image/*"
-                id="icon-button-file"
-                /*  multiple */
-                type="file"
-                onChange={handleChange}
-                onClick={(e) => (e.target.value = null)}
+    <div className="flex justify-center animate-pulse">
+      <Button
+        onClick={handleClick}
+        className="shadow-md hover:bg-gray-100 rounded-full border"
+      >
+        <AiOutlinePlusCircle className="text-gray-900 h-5 w-5" />
+      </Button>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+        }}
+      >
+        <Typography sx={{ p: 2 }}>
+          <div className="flex flex-col w-[100%] max-w-3xl  m-auto mt-7 border-b border-gray-300">
+            <div className="flex justify-between my-2 items-center">
+              <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+                <InputLabel id="search-make">Make</InputLabel>
+                <Select
+                  labelId="search-make"
+                  label="Make"
+                  value={make}
+                  onChange={modelResult}
+                  MenuProps={MenuProps}
+                >
+                  {dataMoto.map((x, index) => (
+                    <MenuItem key={index} value={x.name}>
+                      {`${x.name}`}{" "}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+                <InputLabel id="search-model">Model</InputLabel>
+                <Select
+                  labelId="search-model"
+                  label="Model"
+                  value={model}
+                  onChange={(event) => setModel(event.target.value)}
+                  MenuProps={MenuProps}
+                >
+                  {modelList.map((x, index) => (
+                    <MenuItem key={index} value={x.name}>
+                      {`${x.name}`}{" "}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <TextField
+                className="w-48 m-1 bg-[#FFFFFF]"
+                size="small"
+                label="Price"
+                id="Price"
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                }}
+                onKeyDown={(e) =>
+                  ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+                }
+                onChange={(event) => setPrice(event.target.value)}
+                value={price}
               />
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <MdCameraAlt className="text-blue-700" />
-              </IconButton>
-            </label>
-
-            <div className="flex items-center justify-center">
-              <CircularProgress variant="determinate" value={progress} />
-              <Typography
-                variant="caption"
-                component="div"
-                color="text.secondary"
-                position="absolute"
-              >
-                {`${Math.round(progress)}%`}
-              </Typography>
             </div>
+            <div className="flex justify-between my-2 items-center">
+              <TextField
+                className="w-48 m-1 bg-[#FFFFFF]"
+                size="small"
+                label="Horsepower"
+                id="Horsepower"
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                }}
+                onKeyDown={(e) =>
+                  ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+                }
+                onChange={(event) => setHorsepower(event.target.value)}
+                value={horsepower}
+              />
 
-            <button
-              onClick={handleUpload}
-              className="border border-blue-400 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-            >
-              Upload
-            </button>
-          </div>
-          <div className="flex justify-between my-2 items-center">
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
-              <InputLabel id="search-make">Make</InputLabel>
-              <Select
-                labelId="search-make"
-                label="Make"
-                value={make}
-                onChange={modelResult}
-                MenuProps={MenuProps}
-              >
-                {dataMoto.map((x, index) => (
-                  <MenuItem key={index} value={x.name}>
-                    {`${x.name}`}{" "}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <TextField
+                className="w-48 m-1 bg-[#FFFFFF]"
+                size="small"
+                label="Year"
+                id="Year"
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                }}
+                onKeyDown={(e) =>
+                  ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+                }
+                onChange={(event) => setYear(event.target.value)}
+                value={year}
+              />
 
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
-              <InputLabel id="search-model">Model</InputLabel>
-              <Select
-                labelId="search-model"
-                label="Model"
-                value={model}
-                onChange={(event) => setModel(event.target.value)}
-                MenuProps={MenuProps}
-              >
-                {modelList.map((x, index) => (
-                  <MenuItem key={index} value={x.name}>
-                    {`${x.name}`}{" "}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <TextField
+                className="w-48 m-1 bg-[#FFFFFF]"
+                size="small"
+                label="Kilometers"
+                id="Kilometers"
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                }}
+                onKeyDown={(e) =>
+                  ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+                }
+                onChange={(event) => setKilometers(event.target.value)}
+                value={kilometers}
+              />
+            </div>
+            <div className="flex justify-between my-2 items-center">
+              <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+                <InputLabel id="choise-gearbox">Gearbox</InputLabel>
+                <Select
+                  labelId="choise-gearbox"
+                  label="Gearbox"
+                  value={gearbox}
+                  onChange={(event) => setGearbox(event.target.value)}
+                  MenuProps={MenuProps}
+                >
+                  {gearboxType.map((x, index) => (
+                    <MenuItem key={index} value={x}>
+                      {`${x}`}{" "}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
+              <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+                <InputLabel id="choise-gearbox">Fuel </InputLabel>
+                <Select
+                  labelId="choise-fuel"
+                  label="Fuel"
+                  value={fuel}
+                  onChange={(event) => setFuel(event.target.value)}
+                  MenuProps={MenuProps}
+                >
+                  {fuelType.map((x, index) => (
+                    <MenuItem key={index} value={x}>
+                      {`${x}`}{" "}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
+                <InputLabel id="choise-gearbox">Cooling </InputLabel>
+                <Select
+                  labelId="choise-cooling"
+                  label="Cooling"
+                  value={fuel}
+                  onChange={(event) => setFuel(event.target.value)}
+                  MenuProps={MenuProps}
+                >
+                  {coolingType.map((x, index) => (
+                    <MenuItem key={index} value={x}>
+                      {`${x}`}{" "}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
             <TextField
-              className="w-48 m-1 bg-[#FFFFFF]"
-              size="small"
-              label="Price"
-              id="Price"
-              type="number"
-              InputProps={{ inputProps: { min: 0 } }}
-              onPaste={(e) => {
-                e.preventDefault();
+              className="my-2 m-1"
+              id="Description"
+              label="Description"
+              sx={{
+                maxWidth: "100%",
               }}
-              onKeyDown={(e) =>
-                ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
-              }
-              onChange={(event) => setPrice(event.target.value)}
-              value={price}
-            />
-          </div>
-          <div className="flex justify-between my-2 items-center">
-            <TextField
-              className="w-48 m-1 bg-[#FFFFFF]"
-              size="small"
-              label="Horsepower"
-              id="Horsepower"
-              type="number"
-              InputProps={{ inputProps: { min: 0 } }}
-              onPaste={(e) => {
-                e.preventDefault();
-              }}
-              onKeyDown={(e) =>
-                ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
-              }
-              onChange={(event) => setHorsepower(event.target.value)}
-              value={horsepower}
+              multiline
+              rows={4}
+              defaultValue="No description"
             />
 
-            <TextField
-              className="w-48 m-1 bg-[#FFFFFF]"
-              size="small"
-              label="Year"
-              id="Year"
-              type="number"
-              InputProps={{ inputProps: { min: 0 } }}
-              onPaste={(e) => {
-                e.preventDefault();
-              }}
-              onKeyDown={(e) =>
-                ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
-              }
-              onChange={(event) => setYear(event.target.value)}
-              value={year}
-            />
+            <div className="flex justify-between my-2 items-center">
+              <TextField
+                className="w-48 m-1 bg-[#FFFFFF]"
+                size="small"
+                label="Location"
+                id="Location"
+                onChange={(event) => setLocation(event.target.value)}
+                value={location}
+              />
 
-            <TextField
-              className="w-48 m-1 bg-[#FFFFFF]"
-              size="small"
-              label="Kilometers"
-              id="Kilometers"
-              type="number"
-              InputProps={{ inputProps: { min: 0 } }}
-              onPaste={(e) => {
-                e.preventDefault();
-              }}
-              onKeyDown={(e) =>
-                ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
-              }
-              onChange={(event) => setKilometers(event.target.value)}
-              value={kilometers}
-            />
-          </div>
-          <div className="flex justify-between my-2 items-center">
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
-              <InputLabel id="choise-gearbox">Gearbox</InputLabel>
-              <Select
-                labelId="choise-gearbox"
-                label="Gearbox"
-                value={gearbox}
-                onChange={(event) => setGearbox(event.target.value)}
-                MenuProps={MenuProps}
-              >
-                {gearboxType.map((x, index) => (
-                  <MenuItem key={index} value={x}>
-                    {`${x}`}{" "}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <TextField
+                className="w-48 m-1 bg-[#FFFFFF]"
+                size="small"
+                label="Phone"
+                id="Phone"
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                }}
+                onKeyDown={(e) =>
+                  ["e", "E", "-"].includes(e.key) && e.preventDefault()
+                }
+                onChange={(event) => setPhone(event.target.value)}
+                value={phone}
+              />
 
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
-              <InputLabel id="choise-gearbox">Fuel </InputLabel>
-              <Select
-                labelId="choise-fuel"
-                label="Fuel"
-                value={fuel}
-                onChange={(event) => setFuel(event.target.value)}
-                MenuProps={MenuProps}
-              >
-                {fuelType.map((x, index) => (
-                  <MenuItem key={index} value={x}>
-                    {`${x}`}{" "}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
-              <InputLabel id="choise-gearbox">Cooling </InputLabel>
-              <Select
-                labelId="choise-cooling"
-                label="Cooling"
-                value={fuel}
-                onChange={(event) => setFuel(event.target.value)}
-                MenuProps={MenuProps}
-              >
-                {coolingType.map((x, index) => (
-                  <MenuItem key={index} value={x}>
-                    {`${x}`}{" "}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <TextField
-            className="my-2 m-1"
-            id="Description"
-            label="Description"
-            sx={{
-              maxWidth: "100%",
-            }}
-            multiline
-            rows={4}
-            defaultValue="No description"
-          />
-
-          <div className="flex justify-between my-2 items-center">
-            <TextField
-              className="w-48 m-1 bg-[#FFFFFF]"
-              size="small"
-              label="Location"
-              id="Location"
-              onChange={(event) => setLocation(event.target.value)}
-              value={location}
-            />
-
-            <TextField
-              className="w-48 m-1 bg-[#FFFFFF]"
-              size="small"
-              label="Phone"
-              id="Phone"
-              type="number"
-              InputProps={{ inputProps: { min: 0 } }}
-              onPaste={(e) => {
-                e.preventDefault();
-              }}
-              onKeyDown={(e) =>
-                ["e", "E", "-"].includes(e.key) && e.preventDefault()
-              }
-              onChange={(event) => setPhone(event.target.value)}
-              value={phone}
-            />
-
-            <TextField
-              className="w-48 m-1 bg-[#FFFFFF]"
-              size="small"
-              label="Phone 2"
-              id="Phone 2"
-              type="number"
-              InputProps={{ inputProps: { min: 0 } }}
-              onPaste={(e) => {
-                e.preventDefault();
-              }}
-              onKeyDown={(e) =>
-                ["e", "E", "-"].includes(e.key) && e.preventDefault()
-              }
-              onChange={(event) => setPhone2(event.target.value)}
-              value={phone2}
-            />
-          </div>
-          <div className="border w-[100%] flex max-w-2xl justify-around m-auto my-2">
-            <div className="w-[75%] border-r flex items-center justify-around relative">
-              {!images[0] ? (
-                <div className="h-60 flex items-center justify-around">
-                  <label htmlFor="icon-button-file">
-                    <Input
-                      accept="image/*"
-                      id="icon-button-file"
-                      type="file"
-                      onChange={handleChange}
-                      onClick={(e) => (e.target.value = null)}
+              <TextField
+                className="w-48 m-1 bg-[#FFFFFF]"
+                size="small"
+                label="Phone 2"
+                id="Phone 2"
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                }}
+                onKeyDown={(e) =>
+                  ["e", "E", "-"].includes(e.key) && e.preventDefault()
+                }
+                onChange={(event) => setPhone2(event.target.value)}
+                value={phone2}
+              />
+            </div>
+            <div className="border w-[100%] flex max-w-2xl justify-around m-auto my-2">
+              <div className="w-[75%] border-r flex items-center justify-around relative">
+                {!images[0] ? (
+                  <div className="h-60 flex items-center justify-around">
+                    <label htmlFor="icon-button-file">
+                      <Input
+                        accept="image/*"
+                        id="icon-button-file"
+                        type="file"
+                        onChange={handleChange}
+                        onClick={(e) => (e.target.value = null)}
+                      />
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <MdCameraAlt className="h-10 w-10" />
+                      </IconButton>
+                    </label>
+                  </div>
+                ) : (
+                  <Image
+                    src={URL.createObjectURL(images[0])}
+                    width={890}
+                    height={500}
+                    objectFit="cover"
+                  />
+                )}
+              </div>
+              <div className="w-[25%] flex flex-col">
+                <div className="h-[33.3%] flex flex-col border-b items-center justify-around">
+                  {!images[1] ? (
+                    <label htmlFor="icon-button-file">
+                      <Input
+                        accept="image/*"
+                        id="icon-button-file"
+                        type="file"
+                        onChange={handleChange}
+                        onClick={(e) => (e.target.value = null)}
+                      />
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <MdCameraAlt className="h-8 w-8" />
+                      </IconButton>
+                    </label>
+                  ) : (
+                    <Image
+                      src={URL.createObjectURL(images[1])}
+                      width={890}
+                      height={500}
+                      objectFit="cover"
                     />
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <MdCameraAlt className="text-sky-400 h-10 w-10" />
-                    </IconButton>
-                  </label>
+                  )}
                 </div>
+                <div className="h-[33.3%] flex flex-col border-b items-center justify-around">
+                  {!images[2] ? (
+                    <label htmlFor="icon-button-file">
+                      <Input
+                        accept="image/*"
+                        id="icon-button-file"
+                        type="file"
+                        onChange={handleChange}
+                        onClick={(e) => (e.target.value = null)}
+                      />
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <MdCameraAlt className="h-8 w-8" />
+                      </IconButton>
+                    </label>
+                  ) : (
+                    <Image
+                      src={URL.createObjectURL(images[2])}
+                      width={890}
+                      height={500}
+                      objectFit="cover"
+                    />
+                  )}
+                </div>
+                <div className="h-[33.3%] flex flex-col items-center justify-around">
+                  {!images[3] ? (
+                    <label htmlFor="icon-button-file">
+                      <Input
+                        accept="image/*"
+                        id="icon-button-file"
+                        type="file"
+                        onChange={handleChange}
+                        onClick={(e) => (e.target.value = null)}
+                      />
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <MdCameraAlt className="h-8 w-8" />
+                      </IconButton>
+                    </label>
+                  ) : (
+                    <Image
+                      src={URL.createObjectURL(images[3])}
+                      width={890}
+                      height={500}
+                      objectFit="cover"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="text-center my-2 flex justify-center">
+              <div className="flex items-center justify-center">
+                <CircularProgress variant="determinate" value={progress} />
+                <Typography
+                  variant="caption"
+                  component="div"
+                  color="text.secondary"
+                  position="absolute"
+                >
+                  {`${Math.round(progress)}%`}
+                </Typography>
+              </div>
+              <button
+                onClick={handleUpload}
+                className="border border-blue-400 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
+              >
+                Safe photos
+              </button>
+            </div>
+            <div className="text-center my-2">
+              {!urls[3] ? (
+                <button
+                  disabled={!urls[3]}
+                  className="border border-gray-300 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
+                >
+                  Post product
+                </button>
               ) : (
-                <Image
-                  src={URL.createObjectURL(images[0])}
-                  width={890}
-                  height={500}
-                  objectFit="cover"
-                />
+                <button
+                  className="border border-sky-400 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
+                  onClick={postUpload}
+                >
+                  Post product
+                </button>
               )}
-            </div>
-            <div className="w-[25%] flex flex-col">
-              <div className="h-[33.3%] flex flex-col border-b items-center justify-around">
-                {!images[1] ? (
-                  <label htmlFor="icon-button-file">
-                    <Input
-                      accept="image/*"
-                      id="icon-button-file"
-                      type="file"
-                      onChange={handleChange}
-                      onClick={(e) => (e.target.value = null)}
-                    />
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <MdCameraAlt className="text-sky-400 h-8 w-8" />
-                    </IconButton>
-                  </label>
-                ) : (
-                  <Image
-                    src={URL.createObjectURL(images[1])}
-                    width={890}
-                    height={500}
-                    objectFit="cover"
-                  />
-                )}
-              </div>
-              <div className="h-[33.3%] flex flex-col border-b items-center justify-around">
-                {!images[2] ? (
-                  <label htmlFor="icon-button-file">
-                    <Input
-                      accept="image/*"
-                      id="icon-button-file"
-                      type="file"
-                      onChange={handleChange}
-                      onClick={(e) => (e.target.value = null)}
-                    />
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <MdCameraAlt className="text-sky-400 h-8 w-8" />
-                    </IconButton>
-                  </label>
-                ) : (
-                  <Image
-                    src={URL.createObjectURL(images[2])}
-                    width={890}
-                    height={500}
-                    objectFit="cover"
-                  />
-                )}
-              </div>
-              <div className="h-[33.3%] flex flex-col items-center justify-around">
-                {!images[3] ? (
-                  <label htmlFor="icon-button-file">
-                    <Input
-                      accept="image/*"
-                      id="icon-button-file"
-                      type="file"
-                      onChange={handleChange}
-                      onClick={(e) => (e.target.value = null)}
-                    />
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <MdCameraAlt className="text-sky-400 h-8 w-8" />
-                    </IconButton>
-                  </label>
-                ) : (
-                  <Image
-                    src={URL.createObjectURL(images[3])}
-                    width={890}
-                    height={500}
-                    objectFit="cover"
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="text-center my-2">
-            <button
-              onClick={handleUpload}
-              className="border border-blue-400 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-            >
-              Safe photos
-            </button>
-          </div>
-          <div className="text-center my-2">
-            {!urls[3] ? (
-              <button
-                disabled={!urls[3]}
-                className="border border-gray-300 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-              >
-                Post product
-              </button>
-            ) : (
-              <button
-                className="border border-sky-400 m-0.5 rounded px-4 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-                onClick={postUpload}
-              >
-                Post product
-              </button>
-            )}
 
-            <button
-              className="border border-red-400 m-0.5 rounded px-6 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
-              onClick={() => setSee(false)}
-            >
-              Close add
-            </button>
+              <button
+                className="border border-red-400 m-0.5 rounded px-6 py-2 w-max hover:shadow active:scale-90 transition duration-150 bg-transparent text-sm hover:bg-[#f4f7f61a]"
+                onClick={() => setAnchorEl(null)}
+              >
+                Close add
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        ""
-      )}
+        </Typography>
+      </Popover>
     </div>
   );
 }

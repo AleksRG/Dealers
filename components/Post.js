@@ -70,10 +70,10 @@ function Post({
             {horsepower}hp {year}year {kilometers}km{" "}
           </p>
         </div>
-        <div className="h-12 leading-4 md:h-24 lg:h-32 overflow-hidden ">
+        <div className="h-16 leading-4 md:h-24 lg:h-32 overflow-hidden my-1">
           {description}
         </div>
-        <div className="border-t flex justify-between text-center text-xs text-gray-400">
+        <div className="border-t flex justify-between text-center text-xs text-gray-400 ">
           <p className="">{username}</p>
           <p>{timestamp}</p>
         </div>

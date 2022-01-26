@@ -16,7 +16,7 @@ function Header() {
 
   return (
     <div className="sticky top-0 z-50 bg-[#ffffff] border-b shadow-md">
-      <div className="  flex justify-between object-contain p-3.5 border-gray-300 h-12 items-center max-w-7xl m-auto">
+      <div className="flex justify-between object-contain p-3.5 border-gray-300 h-12 items-center max-w-7xl m-auto">
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap"
@@ -57,10 +57,10 @@ function Header() {
             className="text-gray-300 transition duration-100 transform hover:scale-125"
             /* onClick={() => router.push("/moto")} */
           />
-          <RiSettings3Fill
+          {/* <RiSettings3Fill
             className="text-gray-300 transition duration-100 transform hover:scale-125"
-            /*  onClick={() => router.push("/moto")} */
-          />
+              onClick={() => router.push("/moto")} 
+            /> */}
         </div>
 
         <div className="flex items-center">
