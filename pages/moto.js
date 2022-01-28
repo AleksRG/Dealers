@@ -107,16 +107,17 @@ function New({ items }) {
     },
   });
   const classes = useStyles();
+
   return (
     <div className="min-h-screen">
       <Header />
       <div className="flex justify-left pb-3 lg:pb-0 space-x-2 sticky top-12 z-50 max-w-7xl m-auto">
-        <Button
+        <button
           onClick={handleClick}
-          className="shadow-md hover:bg-gray-100 bg-[#ffffff]"
+          className="shadow-md hover:bg-gray-100 px-6 bg-[#ffffff] py-1 rounded-sm"
         >
           <BiSearch className="text-gray-900 h-5 w-5" />
-        </Button>
+        </button>
         <Popover
           id={id}
           open={open}

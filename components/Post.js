@@ -25,7 +25,7 @@ function Post({
 
   return (
     <div
-      className="md:flex bg-[#ffffff] mb-10 mx-4 border rounded-sm max-w-4xl cursor-pointer hover:scale-105 transform transition duration-300 ease-out"
+      className="md:flex bg-[#ffffff] mb-8 mx-4 border rounded-sm max-w-4xl cursor-pointer hover:scale-105 transform transition duration-300 ease-out"
       onClick={(e) => seeMore(reference, e)}
     >
       <div className="md:w-[65%] flex">
