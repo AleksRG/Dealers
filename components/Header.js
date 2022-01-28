@@ -26,7 +26,7 @@ function Header() {
           rel="stylesheet"
         />
         <a
-          className="text-3xl font-satisfy font-bold cursor-pointer"
+          className="text-2xl md:text-3xl font-satisfy font-bold cursor-pointer"
           onClick={() => router.push("/")}
         >
           dealers
