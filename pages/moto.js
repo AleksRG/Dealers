@@ -110,10 +110,10 @@ function New({ items }) {
   return (
     <div className="min-h-screen">
       <Header />
-      <div className="flex justify-center py-3 space-x-2">
+      <div className="flex justify-left pb-3 lg:pb-0 space-x-2 sticky top-12 z-50 max-w-7xl m-auto">
         <Button
           onClick={handleClick}
-          className="shadow-md hover:bg-gray-100 rounded-full "
+          className="shadow-md hover:bg-gray-100 bg-[#ffffff]"
         >
           <BiSearch className="text-gray-900 h-5 w-5" />
         </Button>

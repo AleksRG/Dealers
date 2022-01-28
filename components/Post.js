@@ -28,7 +28,7 @@ function Post({
       className="md:flex bg-[#ffffff] mb-10 mx-4 border rounded-sm max-w-4xl cursor-pointer hover:scale-105 transform transition duration-300 ease-out"
       onClick={(e) => seeMore(reference, e)}
     >
-      <div className="md:w-[65%] flex p-[1px]">
+      <div className="md:w-[65%] flex">
         <div className="flex w-[76.6%] relative min-w-[100px]">
           <Image src={imageUrl} width={890} height={500} objectFit="cover" />
         </div>
@@ -56,7 +56,7 @@ function Post({
           />
         </div>
       </div>
-      <div className="flex flex-col bg-white md:w-[35%] justify-between p-2">
+      <div className="flex font-mono flex-col bg-white md:w-[35%] justify-between px-1.5">
         <div className="flex justify-between relative">
           <div className="font-mono font-bold">{price}€</div>
           <div className="space-x-1 font-mono font-bold relative text-right">
@@ -70,7 +70,7 @@ function Post({
             {horsepower}hp {year}year {kilometers}km{" "}
           </p>
         </div>
-        <div className="h-16 leading-4 md:h-24 lg:h-32 overflow-hidden my-1">
+        <div className="h-16 leading-4 md:h-24 lg:h-36 overflow-hidden my-1">
           {description}
         </div>
         <div className="border-t flex justify-between text-center text-xs text-gray-400 ">

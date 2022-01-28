@@ -1,7 +1,7 @@
 function FirstBanner() {
   return (
-    <div className="flex flex-col h-96 items-center justify-center">
-      <h1 className="font-satisfy font-bold text-6xl text-center">
+    <div className="flex h-screen ">
+      <h1 className="font-satisfy font-bold text-6xl m-auto text-center">
         Bikes Cars Vans Trucks Farm Boats Caravans
       </h1>
     </div>

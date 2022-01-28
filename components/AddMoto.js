@@ -18,7 +18,6 @@ import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 
 function addMoto() {
-  const [see, setSee] = useState(false);
   const [session] = useSession();
   const [images, setImages] = useState([]);
   const [urls, setUrls] = useState([]);
@@ -36,6 +35,7 @@ function addMoto() {
   const [gearbox, setGearbox] = useState("");
   const [fuel, setFuel] = useState("");
   const [cooling, setCooling] = useState("");
+  const [description, setDescription] = useState("");
 
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
@@ -119,6 +119,7 @@ function addMoto() {
       year: year,
       horsepower: horsepower,
       gearbox: gearbox,
+      description: description,
       location: location,
       fuel: fuel,
       cooling: cooling,
@@ -139,6 +140,7 @@ function addMoto() {
     setCooling("");
     setPhone("");
     setPhone2("");
+    setDescription("");
   };
 
   const gearboxType = ["Manuel", "Automatic", "Semi-automatic"];
@@ -149,10 +151,10 @@ function addMoto() {
     display: "none",
   });
   return (
-    <div className="flex justify-center animate-pulse">
+    <div className="flex justify-center">
       <Button
         onClick={handleClick}
-        className="shadow-md hover:bg-gray-100 rounded-full border"
+        className="shadow-md hover:bg-gray-100 border bg-[#ffffff] "
       >
         <AiOutlinePlusCircle className="text-gray-900 h-5 w-5" />
       </Button>
@@ -167,7 +169,7 @@ function addMoto() {
       >
         <Typography sx={{ p: 2 }}>
           <div className="flex flex-col w-[100%] max-w-3xl  m-auto mt-7 border-b border-gray-300">
-            <div className="flex justify-between my-2 items-center">
+            <div className="flex justify-between my-2 items-center space-x-2">
               <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
                 <InputLabel id="search-make">Make</InputLabel>
                 <Select
@@ -219,7 +221,7 @@ function addMoto() {
                 value={price}
               />
             </div>
-            <div className="flex justify-between my-2 items-center">
+            <div className="flex justify-between my-2 items-center space-x-2">
               <TextField
                 className="w-48 m-1 bg-[#FFFFFF]"
                 size="small"
@@ -271,7 +273,7 @@ function addMoto() {
                 value={kilometers}
               />
             </div>
-            <div className="flex justify-between my-2 items-center">
+            <div className="flex justify-between my-2 items-center space-x-2">
               <FormControl className="w-48 m-1 bg-[#FFFFFF]" size="small">
                 <InputLabel id="choise-gearbox">Gearbox</InputLabel>
                 <Select
@@ -333,9 +335,11 @@ function addMoto() {
               multiline
               rows={4}
               defaultValue="No description"
+              onChange={(event) => setDescription(event.target.value)}
+              value={description}
             />
 
-            <div className="flex justify-between my-2 items-center">
+            <div className="flex justify-between my-2 items-center space-x-2">
               <TextField
                 className="w-48 m-1 bg-[#FFFFFF]"
                 size="small"
