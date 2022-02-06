@@ -5,6 +5,7 @@ import {
   RiRoadsterFill,
   RiTruckLine,
   RiSailboatLine,
+  RiLoginCircleLine,
 } from "react-icons/ri";
 import {
   FaTractor,
@@ -19,7 +20,7 @@ function Header() {
 
   return (
     <div className="sticky top-0 z-50 bg-[#ffffff] border-b shadow-md">
-      <div className="flex justify-between object-contain p-2 border-gray-300 h-11 items-center max-w-7xl m-auto">
+      <div className="flex justify-between object-contain p-2 border-gray-300 h-11 items-center max-w-[1800px] m-auto">
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap"
@@ -70,10 +71,16 @@ function Header() {
               onClick={signOut}
             />
           ) : (
-            <FaRegUserCircle
+            /* <RiLoginCircleLine
               className="text-2xl cursor-pointer transition duration-150 transform hover:scale-110"
               onClick={signIn}
-            />
+            /> */
+            <button
+              className=" text-sm text-gray-500 hover:bg-gray-100 leading-6 py-1 px-5 rounded-lg ring-1 ring-gray-100 ring-inset shadow-md"
+              onClick={signIn}
+            >
+              Log in
+            </button>
           )}
         </div>
       </div>

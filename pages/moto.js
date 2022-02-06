@@ -1,66 +1,44 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import Header from "../components/Header";
 import { db } from "/firebase";
-import Post from "../components/Post";
-import AddMoto from "../components/AddMoto";
 import dataMoto from "./dataMoto.json";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { useSession } from "next-auth/client";
-import { makeStyles } from "@material-ui/styles";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
-import { BiSearch } from "react-icons/bi";
-import Button from "@mui/material/Button";
+import PostN from "../components/PostN";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/solid";
 
-function New({ items }) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [make, setMake] = useState("");
-  const [model, setModel] = useState("");
+function Moto({ items }) {
+  const [make, setMake] = useState("All");
+  const [model, setModel] = useState("All");
   const [modelList, setModelList] = useState([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [session] = useSession();
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 15;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 192,
-      },
-    },
-  };
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
-  const makeFilter = (event) => {
-    setMake(event.target.value);
-    if (event.target.value == "All") setMake("");
-    setModelList(dataMoto.find((x) => x.name === event.target.value).model) ||
-      "";
-    setModel("");
+  function makeFilter(value) {
+    setMake(value);
+    setModelList(dataMoto.find((x) => x.name === value).model) || "";
+    setModel("All");
     setMinPrice("");
     setMaxPrice("");
-  };
+  }
 
-  const modelFilter = (e) => {
-    setModel(e.target.value);
-    if (e.target.value == "All") setModel("");
+  function modelFilter(value) {
+    setModel(value);
     setMinPrice("");
     setMaxPrice("");
-  };
-  const a = [
+  }
+
+  function minPriceFilter(value) {
+    setMinPrice(value);
+    setMaxPrice("");
+  }
+
+  function maxPriceFilter(value) {
+    setMaxPrice(value);
+  }
+
+  const prices = [
     500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500,
     7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500, 11000, 11500, 12000,
     12500, 13000, 13500, 14000, 14500, 15000, 15500, 16000, 16500, 17000, 17500,
@@ -72,173 +50,262 @@ function New({ items }) {
     95000, 100000,
   ];
 
-  const minPriceFilter = (e) => {
-    setMinPrice(e.target.value);
-    setMaxPrice("");
-  };
-
-  const maxPriceFilter = (e) => {
-    setMaxPrice(e.target.value);
-  };
-
-  const useStyles = makeStyles({
-    customOutline: {
-      "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgb()",
-      },
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgb(14 165 233)",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgb(56 189 248)",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-        color: "",
-      },
-      "& .MuiOutlinedInput-input": {
-        color: "",
-      },
-      "& .MuiInputLabel-root": {
-        color: "",
-      },
-      "& .MuiInputLabel-root.Mui-focused": {
-        color: "rgb(14 165 233)",
-      },
-    },
-  });
-  const classes = useStyles();
-
   return (
     <div className="min-h-screen">
       <Header />
-      <div className="flex justify-left pb-3 lg:pb-0 space-x-2 sticky top-12 z-50 max-w-7xl m-auto">
-        <button
-          onClick={handleClick}
-          className="shadow-md hover:bg-gray-100 px-6 bg-[#ffffff] py-1 rounded-sm"
-        >
-          <BiSearch className="text-gray-900 h-5 w-5" />
-        </button>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <Typography sx={{ p: 2 }}>
-            {" "}
-            <div className="flex justify-center ">
-              <div className="m-1">
-                <FormControl
-                  size="small"
-                  classes={{ root: classes.customOutline }}
-                >
-                  <InputLabel id="search-maker" className="text-gray-900">
-                    Make
-                  </InputLabel>
-                  <Select
-                    className="w-36 items-center"
-                    labelId="search-make"
-                    label="Make"
-                    value={make}
-                    onChange={makeFilter}
-                    MenuProps={MenuProps}
-                  >
-                    {dataMoto.map((x, index) => (
-                      <MenuItem key={index} value={x.name}>
-                        {`${x.name}`}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="m-1">
-                <FormControl
-                  size="small"
-                  classes={{ root: classes.customOutline }}
-                >
-                  <InputLabel id="search-model" className="text-gray-900">
-                    Model
-                  </InputLabel>
-                  <Select
-                    className="w-36 items-center"
-                    labelId="search-model"
-                    label="Model"
-                    value={model}
-                    onChange={modelFilter}
-                    MenuProps={MenuProps}
-                  >
-                    {modelList.map((x, index) => (
-                      <MenuItem key={index} value={x.name}>
-                        {`${x.name}`}{" "}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
+      <div className="max-w-[1800px] m-auto">
+        <div className="w-44 fixed top-16 ml-2 space-y-2">
+          <Listbox value={make} onChange={makeFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm ">
+                <span className="block truncate">{make}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto  bg-white rounded-lg shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
+                  {dataMoto.map((person, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `${
+                          active ? "text-blue-900 bg-blue-100" : "text-gray-900"
+                        }
+                          cursor-default select-none relative pl-10 pr-4`
+                      }
+                      value={`${person.name}`}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span
+                            className={`${
+                              selected ? "font-medium" : "font-normal"
+                            } block truncate`}
+                          >
+                            {`${person.name}`}
+                          </span>
+                          {selected ? (
+                            <span
+                              className={`${
+                                active ? "text-blue-600" : "text-blue-600"
+                              }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            >
+                              <CheckIcon
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
             </div>
-            <div className="flex justify-center">
-              <div className="m-1">
-                <FormControl
-                  size="small"
-                  classes={{ root: classes.customOutline }}
-                >
-                  <InputLabel id="set-min-price" className="text-gray-900">
-                    Min price
-                  </InputLabel>
-                  <Select
-                    className="w-36 items-center"
-                    labelId="set-min-price"
-                    label="Min price"
-                    value={minPrice}
-                    onChange={minPriceFilter}
-                    MenuProps={MenuProps}
-                  >
-                    {a.map((x, index) => (
-                      <MenuItem key={index} value={x}>
-                        {`${x}`}{" "}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="m-1">
-                <FormControl
-                  size="small"
-                  classes={{ root: classes.customOutline }}
-                >
-                  <InputLabel id="set-max-price" className="text-gray-900">
-                    Max price
-                  </InputLabel>
-                  <Select
-                    className="w-36 items-center"
-                    labelId="set-max-price"
-                    label="Max price"
-                    value={maxPrice}
-                    onChange={maxPriceFilter}
-                    MenuProps={MenuProps}
-                  >
-                    {a
-                      .filter((x) => x > minPrice)
-                      .map((x, index) => (
-                        <MenuItem key={index} value={x}>
-                          {`${x}`}{" "}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
-              </div>
+          </Listbox>
+
+          <Listbox value={model} onChange={modelFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm">
+                <span className="block truncate">{model}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto  bg-white rounded-lg  shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
+                  {modelList.map((person, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `${
+                          active ? "text-blue-900 bg-blue-100" : "text-gray-900"
+                        }
+                          cursor-default select-none relative pl-10 pr-4`
+                      }
+                      value={`${person.name}`}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span
+                            className={`${
+                              selected ? "font-medium" : "font-normal"
+                            } block truncate`}
+                          >
+                            {`${person.name}`}
+                          </span>
+                          {selected ? (
+                            <span
+                              className={`${
+                                active ? "text-blue-600" : "text-blue-600"
+                              }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            >
+                              <CheckIcon
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
             </div>
-          </Typography>
-        </Popover>
-        {session ? <AddMoto /> : ""}{" "}
-      </div>
-      <div className="grid md:flex justify-center">
-        <div className="flex flex-col items-center ">
-          {!make
+          </Listbox>
+
+          <Listbox value={minPrice} onChange={minPriceFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm">
+                <span className="block truncate">
+                  {minPrice || "Min price"}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg  shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
+                  {prices.map((price, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `${
+                          active ? "text-blue-900 bg-blue-100" : "text-gray-900"
+                        }
+                          cursor-default select-none relative pl-10 pr-4`
+                      }
+                      value={price}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span
+                            className={`${
+                              selected ? "font-medium" : "font-normal"
+                            } block truncate`}
+                          >
+                            {price}
+                          </span>
+                          {selected ? (
+                            <span
+                              className={`${
+                                active ? "text-blue-600" : "text-blue-600"
+                              }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            >
+                              <CheckIcon
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
+
+          <Listbox value={maxPrice} onChange={maxPriceFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm">
+                <span className="block truncate">
+                  {maxPrice || "Max price"}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg  shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
+                  {prices
+                    .filter((price) => price > minPrice)
+                    .map((price, index) => (
+                      <Listbox.Option
+                        key={index}
+                        className={({ active }) =>
+                          `${
+                            active
+                              ? "text-blue-900 bg-blue-100"
+                              : "text-gray-900"
+                          }
+                          cursor-default select-none relative pl-10 pr-4`
+                        }
+                        value={price}
+                      >
+                        {({ selected, active }) => (
+                          <>
+                            <span
+                              className={`${
+                                selected ? "font-medium" : "font-normal"
+                              } block truncate`}
+                            >
+                              {price}
+                            </span>
+                            {selected ? (
+                              <span
+                                className={`${
+                                  active ? "text-blue-600" : "text-blue-600"
+                                }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                              >
+                                <CheckIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
+        </div>
+
+        <div>
+          {make == "All"
             ? !minPrice
               ? items
                   .filter(
@@ -247,7 +314,7 @@ function New({ items }) {
                       : (x) => x.post.price <= Number.MAX_VALUE
                   )
                   .map(({ id, post }) => (
-                    <Post
+                    <PostN
                       reference={id}
                       key={id.toString()}
                       username={post.username}
@@ -263,6 +330,10 @@ function New({ items }) {
                       year={post.year}
                       kilometers={post.kilometers}
                       description={post.description}
+                      gearbox={post.gearbox}
+                      kilometers={post.kilometers}
+                      fuel={post.fuel}
+                      location={post.location}
                     />
                   ))
               : items
@@ -273,7 +344,7 @@ function New({ items }) {
                           x.post.price >= minPrice && x.post.price <= maxPrice
                   )
                   .map(({ id, post }) => (
-                    <Post
+                    <PostN
                       reference={id}
                       key={id.toString()}
                       username={post.username}
@@ -289,11 +360,15 @@ function New({ items }) {
                       year={post.year}
                       kilometers={post.kilometers}
                       description={post.description}
+                      gearbox={post.gearbox}
+                      kilometers={post.kilometers}
+                      fuel={post.fuel}
+                      location={post.location}
                     />
                   ))
             : items
                 .filter(
-                  !model
+                  model === "All"
                     ? (x) => x.post.make == make
                     : (x) => x.post.make == make && x.post.model == model
                 )
@@ -304,7 +379,7 @@ function New({ items }) {
                         x.post.price >= minPrice && x.post.price <= maxPrice
                 )
                 .map(({ id, post }) => (
-                  <Post
+                  <PostN
                     reference={id}
                     key={id.toString()}
                     username={post.username}
@@ -320,6 +395,10 @@ function New({ items }) {
                     year={post.year}
                     kilometers={post.kilometers}
                     description={post.description}
+                    gearbox={post.gearbox}
+                    kilometers={post.kilometers}
+                    fuel={post.fuel}
+                    location={post.location}
                   />
                 ))}
         </div>
@@ -327,7 +406,7 @@ function New({ items }) {
     </div>
   );
 }
-export default New;
+export default Moto;
 
 export async function getServerSideProps() {
   const data = await db.collection("moto").get();
