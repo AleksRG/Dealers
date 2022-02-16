@@ -3,22 +3,28 @@ import Header from "../components/Header";
 import { db } from "/firebase";
 import dataMoto from "./dataMoto.json";
 import { useSession } from "next-auth/client";
-import PostN from "../components/PostN";
+import Post from "../components/Post";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/solid";
+import { MdArrowBackIosNew } from "react-icons/md";
 
 function Moto({ items }) {
-  const [make, setMake] = useState("All");
-  const [model, setModel] = useState("All");
+  const [make, setMake] = useState("All Makes");
+  const [model, setModel] = useState("All Models");
   const [modelList, setModelList] = useState([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [fuelType, setFuelType] = useState("Fuel type");
+  const [minYear, setMinYear] = useState("Min year");
+  const [maxYear, setMaxYear] = useState("Max year");
+  const [gearbox, setGearbox] = useState("Gearbox");
   const [session] = useSession();
+  const [showSidebar, setShowSidebar] = useState(false);
 
   function makeFilter(value) {
     setMake(value);
-    setModelList(dataMoto.find((x) => x.name === value).model) || "";
-    setModel("All");
+    setModelList(dataMoto.find((x) => x.name === value).model) || "All Models";
+    setModel("All Models");
     setMinPrice("");
     setMaxPrice("");
   }
@@ -38,6 +44,22 @@ function Moto({ items }) {
     setMaxPrice(value);
   }
 
+  function fuelTypeFilter(value) {
+    setFuelType(value);
+  }
+
+  function minYearFilter(value) {
+    setMinYear(value);
+  }
+
+  function maxYearFilter(value) {
+    setMaxYear(value);
+  }
+
+  function gearboxFilter(value) {
+    setGearbox(value);
+  }
+
   const prices = [
     500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500,
     7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500, 11000, 11500, 12000,
@@ -49,15 +71,746 @@ function Moto({ items }) {
     40000, 45000, 50000, 55000, 60000, 65000, 70000, 75000, 80000, 85000, 90000,
     95000, 100000,
   ];
+  const years = [
+    "Min year",
+    2022,
+    2021,
+    2020,
+    2019,
+    2018,
+    2017,
+    2016,
+    2015,
+    2014,
+    2013,
+    2012,
+    2011,
+    2010,
+    2009,
+    2008,
+    2007,
+    2006,
+    2005,
+    2004,
+    2003,
+    2002,
+    2001,
+    2000,
+    1999,
+    1998,
+    1997,
+    1996,
+    1995,
+    1994,
+    1993,
+    1992,
+    1991,
+    1990,
+    1989,
+    1988,
+    1987,
+    1986,
+    1985,
+    1984,
+    1983,
+    1982,
+    1981,
+    1980,
+    1979,
+    1978,
+    1977,
+    1976,
+    1975,
+    1974,
+    1973,
+    1972,
+    1971,
+    1970,
+    1969,
+    1968,
+    1967,
+    1966,
+    1965,
+    1964,
+    1963,
+    1962,
+    1961,
+    1960,
+    1959,
+    1958,
+    1957,
+    1956,
+    1955,
+    1954,
+    1953,
+    1952,
+    1951,
+    1950,
+    1949,
+    1948,
+    1947,
+    1946,
+    1945,
+    1944,
+    1943,
+    1942,
+    1941,
+    1940,
+    1939,
+    1938,
+    1937,
+    1936,
+    1935,
+    1934,
+    1933,
+    1932,
+    1931,
+    1930,
+  ];
+  const yearsMax = [
+    "Max year",
+    2022,
+    2021,
+    2020,
+    2019,
+    2018,
+    2017,
+    2016,
+    2015,
+    2014,
+    2013,
+    2012,
+    2011,
+    2010,
+    2009,
+    2008,
+    2007,
+    2006,
+    2005,
+    2004,
+    2003,
+    2002,
+    2001,
+    2000,
+    1999,
+    1998,
+    1997,
+    1996,
+    1995,
+    1994,
+    1993,
+    1992,
+    1991,
+    1990,
+    1989,
+    1988,
+    1987,
+    1986,
+    1985,
+    1984,
+    1983,
+    1982,
+    1981,
+    1980,
+    1979,
+    1978,
+    1977,
+    1976,
+    1975,
+    1974,
+    1973,
+    1972,
+    1971,
+    1970,
+    1969,
+    1968,
+    1967,
+    1966,
+    1965,
+    1964,
+    1963,
+    1962,
+    1961,
+    1960,
+    1959,
+    1958,
+    1957,
+    1956,
+    1955,
+    1954,
+    1953,
+    1952,
+    1951,
+    1950,
+    1949,
+    1948,
+    1947,
+    1946,
+    1945,
+    1944,
+    1943,
+    1942,
+    1941,
+    1940,
+    1940,
+    1939,
+    1938,
+    1937,
+    1936,
+    1935,
+    1934,
+    1933,
+    1932,
+    1931,
+    1930,
+  ];
+
+  const fuelTypeOption = [
+    "Fuel type",
+    "Petrol",
+    "Diesel",
+    "Electric",
+    "Hybrid",
+  ];
+
+  const gearboxType = ["Gearbox", "Manual", "Automatic", "Semi-automatic"];
 
   return (
     <div className="min-h-screen">
       <Header />
-      <div className="max-w-[1800px] m-auto">
-        <div className="w-44 fixed top-16 ml-2 space-y-2">
+      <div className="max-w-[1800px]">
+        <div className="lg:hidden">
+          {showSidebar ? (
+            <MdArrowBackIosNew
+              className="h-8 w-8 ml-52 items-center cursor-pointer text-sky-500 fixed top-[50%] z-50 "
+              onClick={() => setShowSidebar(!showSidebar)}
+            />
+          ) : (
+            <MdArrowBackIosNew
+              onClick={() => setShowSidebar(!showSidebar)}
+              className="fixed items-center cursor-pointer text-sky-500 top-[50%] h-12 w-12 pr-4 rotate-180 rounded-md -left-5 bg-white/75 shadow-md z-50"
+            />
+          )}
+
+          <div
+            className={`top-0 left-0 w-60 h-full bg-white/75 p-4 fixed ease-in-out duration-500 shadow-md ${
+              showSidebar ? "" : "-translate-x-full"
+            }`}
+          >
+            <div className="w-44 fixed top-[30%] ml-2 2xl:ml-24 space-y-2">
+              <Listbox value={make} onChange={makeFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">{make}</span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {dataMoto.map((data, index) => (
+                        <Listbox.Option
+                          key={index}
+                          className={({ active }) =>
+                            `${
+                              active
+                                ? "text-blue-900 bg-blue-100"
+                                : "text-gray-900"
+                            }
+                          cursor-default select-none relative pl-10 pr-4`
+                          }
+                          value={`${data.name}`}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <span
+                                className={`${
+                                  selected ? "font-medium" : "font-normal"
+                                } block truncate`}
+                              >
+                                {`${data.name}`}
+                              </span>
+                              {selected ? (
+                                <span
+                                  className={`${
+                                    active ? "text-blue-600" : "text-blue-600"
+                                  }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                >
+                                  <CheckIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+
+              <Listbox value={model} onChange={modelFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">{model}</span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto  bg-white rounded-lg shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {modelList.map((data, index) => (
+                        <Listbox.Option
+                          key={index}
+                          className={({ active }) =>
+                            `${
+                              active
+                                ? "text-blue-900 bg-blue-100"
+                                : "text-gray-900"
+                            }
+                          cursor-default select-none relative pl-10 pr-4`
+                          }
+                          value={`${data.name}`}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <span
+                                className={`${
+                                  selected ? "font-medium" : "font-normal"
+                                } block truncate`}
+                              >
+                                {`${data.name}`}
+                              </span>
+                              {selected ? (
+                                <span
+                                  className={`${
+                                    active ? "text-blue-600" : "text-blue-600"
+                                  }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                >
+                                  <CheckIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+
+              <Listbox value={minPrice} onChange={minPriceFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">
+                      {minPrice || "Min price"}
+                    </span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {prices.map((price, index) => (
+                        <Listbox.Option
+                          key={index}
+                          className={({ active }) =>
+                            `${
+                              active
+                                ? "text-blue-900 bg-blue-100"
+                                : "text-gray-900"
+                            }
+                          cursor-default select-none relative pl-10 pr-4`
+                          }
+                          value={price}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <span
+                                className={`${
+                                  selected ? "font-medium" : "font-normal"
+                                } block truncate`}
+                              >
+                                {price}
+                              </span>
+                              {selected ? (
+                                <span
+                                  className={`${
+                                    active ? "text-blue-600" : "text-blue-600"
+                                  }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                >
+                                  <CheckIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+
+              <Listbox value={maxPrice} onChange={maxPriceFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">
+                      {maxPrice || "Max price"}
+                    </span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {prices
+                        .filter((price) => price > minPrice)
+                        .map((price, index) => (
+                          <Listbox.Option
+                            key={index}
+                            className={({ active }) =>
+                              `${
+                                active
+                                  ? "text-blue-900 bg-blue-100"
+                                  : "text-gray-900"
+                              }
+                          cursor-default select-none relative pl-10 pr-4`
+                            }
+                            value={price}
+                          >
+                            {({ selected, active }) => (
+                              <>
+                                <span
+                                  className={`${
+                                    selected ? "font-medium" : "font-normal"
+                                  } block truncate`}
+                                >
+                                  {price}
+                                </span>
+                                {selected ? (
+                                  <span
+                                    className={`${
+                                      active ? "text-blue-600" : "text-blue-600"
+                                    }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                  >
+                                    <CheckIcon
+                                      className="w-5 h-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+              <Listbox value={gearbox} onChange={gearboxFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">{gearbox}</span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {gearboxType.map((data, index) => (
+                        <Listbox.Option
+                          key={index}
+                          className={({ active }) =>
+                            `${
+                              active
+                                ? "text-blue-900 bg-blue-100"
+                                : "text-gray-900"
+                            }
+                          cursor-default select-none relative pl-10 pr-4`
+                          }
+                          value={data}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <span
+                                className={`${
+                                  selected ? "font-medium" : "font-normal"
+                                } block truncate`}
+                              >
+                                {data}
+                              </span>
+                              {selected ? (
+                                <span
+                                  className={`${
+                                    active ? "text-blue-600" : "text-blue-600"
+                                  }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                >
+                                  <CheckIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+
+              <Listbox value={fuelType} onChange={fuelTypeFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">{fuelType}</span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {fuelTypeOption.map((data, index) => (
+                        <Listbox.Option
+                          key={index}
+                          className={({ active }) =>
+                            `${
+                              active
+                                ? "text-blue-900 bg-blue-100"
+                                : "text-gray-900"
+                            }
+                          cursor-default select-none relative pl-10 pr-4`
+                          }
+                          value={data}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <span
+                                className={`${
+                                  selected ? "font-medium" : "font-normal"
+                                } block truncate`}
+                              >
+                                {data}
+                              </span>
+                              {selected ? (
+                                <span
+                                  className={`${
+                                    active ? "text-blue-600" : "text-blue-600"
+                                  }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                >
+                                  <CheckIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+
+              <Listbox value={minYear} onChange={minYearFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">{minYear}</span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {years.map((data, index) => (
+                        <Listbox.Option
+                          key={index}
+                          className={({ active }) =>
+                            `${
+                              active
+                                ? "text-blue-900 bg-blue-100"
+                                : "text-gray-900"
+                            }
+                          cursor-default select-none relative pl-10 pr-4`
+                          }
+                          value={data}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <span
+                                className={`${
+                                  selected ? "font-medium" : "font-normal"
+                                } block truncate`}
+                              >
+                                {data}
+                              </span>
+                              {selected ? (
+                                <span
+                                  className={`${
+                                    active ? "text-blue-600" : "text-blue-600"
+                                  }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                >
+                                  <CheckIcon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+
+              <Listbox value={maxYear} onChange={maxYearFilter}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                    <span className="block truncate">{maxYear}</span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <ChevronDownIcon
+                        className="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                      {yearsMax
+                        .filter(
+                          minYear !== "Min year"
+                            ? (x) => x >= minYear
+                            : (x) => x
+                        )
+                        .map((data, index) => (
+                          <Listbox.Option
+                            key={index}
+                            className={({ active }) =>
+                              `${
+                                active
+                                  ? "text-blue-900 bg-blue-100"
+                                  : "text-gray-900"
+                              }
+                          cursor-default select-none relative pl-10 pr-4`
+                            }
+                            value={data}
+                          >
+                            {({ selected, active }) => (
+                              <>
+                                <span
+                                  className={`${
+                                    selected ? "font-medium" : "font-normal"
+                                  } block truncate`}
+                                >
+                                  {data}
+                                </span>
+                                {selected ? (
+                                  <span
+                                    className={`${
+                                      active ? "text-blue-600" : "text-blue-600"
+                                    }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                  >
+                                    <CheckIcon
+                                      className="w-5 h-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+            </div>
+          </div>
+        </div>
+        <div className="w-44 fixed top-16 ml-2 2xl:ml-24 space-y-2 hidden lg:block">
           <Listbox value={make} onChange={makeFilter}>
             <div className="relative mt-1">
-              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm ">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
                 <span className="block truncate">{make}</span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <ChevronDownIcon
@@ -72,8 +825,8 @@ function Moto({ items }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto  bg-white rounded-lg shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
-                  {dataMoto.map((person, index) => (
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                  {dataMoto.map((data, index) => (
                     <Listbox.Option
                       key={index}
                       className={({ active }) =>
@@ -82,7 +835,7 @@ function Moto({ items }) {
                         }
                           cursor-default select-none relative pl-10 pr-4`
                       }
-                      value={`${person.name}`}
+                      value={`${data.name}`}
                     >
                       {({ selected, active }) => (
                         <>
@@ -91,7 +844,7 @@ function Moto({ items }) {
                               selected ? "font-medium" : "font-normal"
                             } block truncate`}
                           >
-                            {`${person.name}`}
+                            {`${data.name}`}
                           </span>
                           {selected ? (
                             <span
@@ -117,7 +870,7 @@ function Moto({ items }) {
 
           <Listbox value={model} onChange={modelFilter}>
             <div className="relative mt-1">
-              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
                 <span className="block truncate">{model}</span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <ChevronDownIcon
@@ -132,8 +885,8 @@ function Moto({ items }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto  bg-white rounded-lg  shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
-                  {modelList.map((person, index) => (
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto  bg-white rounded-lg shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                  {modelList.map((data, index) => (
                     <Listbox.Option
                       key={index}
                       className={({ active }) =>
@@ -142,7 +895,7 @@ function Moto({ items }) {
                         }
                           cursor-default select-none relative pl-10 pr-4`
                       }
-                      value={`${person.name}`}
+                      value={`${data.name}`}
                     >
                       {({ selected, active }) => (
                         <>
@@ -151,7 +904,7 @@ function Moto({ items }) {
                               selected ? "font-medium" : "font-normal"
                             } block truncate`}
                           >
-                            {`${person.name}`}
+                            {`${data.name}`}
                           </span>
                           {selected ? (
                             <span
@@ -177,7 +930,7 @@ function Moto({ items }) {
 
           <Listbox value={minPrice} onChange={minPriceFilter}>
             <div className="relative mt-1">
-              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
                 <span className="block truncate">
                   {minPrice || "Min price"}
                 </span>
@@ -194,7 +947,7 @@ function Moto({ items }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg  shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
                   {prices.map((price, index) => (
                     <Listbox.Option
                       key={index}
@@ -239,7 +992,7 @@ function Moto({ items }) {
 
           <Listbox value={maxPrice} onChange={maxPriceFilter}>
             <div className="relative mt-1">
-              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-white text-sm">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
                 <span className="block truncate">
                   {maxPrice || "Max price"}
                 </span>
@@ -256,7 +1009,7 @@ function Moto({ items }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg  shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm">
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
                   {prices
                     .filter((price) => price > minPrice)
                     .map((price, index) => (
@@ -302,10 +1055,255 @@ function Moto({ items }) {
               </Transition>
             </div>
           </Listbox>
+          <Listbox value={gearbox} onChange={gearboxFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                <span className="block truncate">{gearbox}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                  {gearboxType.map((data, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `${
+                          active ? "text-blue-900 bg-blue-100" : "text-gray-900"
+                        }
+                          cursor-default select-none relative pl-10 pr-4`
+                      }
+                      value={data}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span
+                            className={`${
+                              selected ? "font-medium" : "font-normal"
+                            } block truncate`}
+                          >
+                            {data}
+                          </span>
+                          {selected ? (
+                            <span
+                              className={`${
+                                active ? "text-blue-600" : "text-blue-600"
+                              }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            >
+                              <CheckIcon
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
+
+          <Listbox value={fuelType} onChange={fuelTypeFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                <span className="block truncate">{fuelType}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                  {fuelTypeOption.map((data, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `${
+                          active ? "text-blue-900 bg-blue-100" : "text-gray-900"
+                        }
+                          cursor-default select-none relative pl-10 pr-4`
+                      }
+                      value={data}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span
+                            className={`${
+                              selected ? "font-medium" : "font-normal"
+                            } block truncate`}
+                          >
+                            {data}
+                          </span>
+                          {selected ? (
+                            <span
+                              className={`${
+                                active ? "text-blue-600" : "text-blue-600"
+                              }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            >
+                              <CheckIcon
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
+
+          <Listbox value={minYear} onChange={minYearFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                <span className="block truncate">{minYear}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                  {years.map((data, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `${
+                          active ? "text-blue-900 bg-blue-100" : "text-gray-900"
+                        }
+                          cursor-default select-none relative pl-10 pr-4`
+                      }
+                      value={data}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span
+                            className={`${
+                              selected ? "font-medium" : "font-normal"
+                            } block truncate`}
+                          >
+                            {data}
+                          </span>
+                          {selected ? (
+                            <span
+                              className={`${
+                                active ? "text-blue-600" : "text-blue-600"
+                              }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            >
+                              <CheckIcon
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
+
+          <Listbox value={maxYear} onChange={maxYearFilter}>
+            <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+                <span className="block truncate">{maxYear}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+                  {yearsMax
+                    .filter(
+                      minYear !== "Min year" ? (x) => x >= minYear : (x) => x
+                    )
+                    .map((data, index) => (
+                      <Listbox.Option
+                        key={index}
+                        className={({ active }) =>
+                          `${
+                            active
+                              ? "text-blue-900 bg-blue-100"
+                              : "text-gray-900"
+                          }
+                          cursor-default select-none relative pl-10 pr-4`
+                        }
+                        value={data}
+                      >
+                        {({ selected, active }) => (
+                          <>
+                            <span
+                              className={`${
+                                selected ? "font-medium" : "font-normal"
+                              } block truncate`}
+                            >
+                              {data}
+                            </span>
+                            {selected ? (
+                              <span
+                                className={`${
+                                  active ? "text-blue-600" : "text-blue-600"
+                                }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                              >
+                                <CheckIcon
+                                  className="w-5 h-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
         </div>
 
-        <div>
-          {make == "All"
+        <div className="lg:ml-48">
+          {make === "All Makes"
             ? !minPrice
               ? items
                   .filter(
@@ -313,8 +1311,28 @@ function Moto({ items }) {
                       ? (x) => x.post.price <= maxPrice
                       : (x) => x.post.price <= Number.MAX_VALUE
                   )
+                  .filter(
+                    fuelType !== "Fuel type"
+                      ? (x) => x.post.fuel === fuelType
+                      : (x) => x.post.fuel
+                  )
+                  .filter(
+                    gearbox !== "Gearbox"
+                      ? (x) => x.post.gearbox === gearbox
+                      : (x) => x.post.gearbox
+                  )
+                  .filter(
+                    minYear !== "Min year"
+                      ? (x) => x.post.year >= minYear
+                      : (x) => x.post.year
+                  )
+                  .filter(
+                    maxYear !== "Max year"
+                      ? (x) => x.post.year <= maxYear
+                      : (x) => x.post.year
+                  )
                   .map(({ id, post }) => (
-                    <PostN
+                    <Post
                       reference={id}
                       key={id.toString()}
                       username={post.username}
@@ -343,8 +1361,28 @@ function Moto({ items }) {
                       : (x) =>
                           x.post.price >= minPrice && x.post.price <= maxPrice
                   )
+                  .filter(
+                    fuelType !== "Fuel type"
+                      ? (x) => x.post.fuel === fuelType
+                      : (x) => x.post.fuel
+                  )
+                  .filter(
+                    gearbox !== "Gearbox"
+                      ? (x) => x.post.gearbox === gearbox
+                      : (x) => x.post.gearbox
+                  )
+                  .filter(
+                    minYear !== "Min year"
+                      ? (x) => x.post.year >= minYear
+                      : (x) => x.post.year
+                  )
+                  .filter(
+                    maxYear !== "Max year"
+                      ? (x) => x.post.year <= maxYear
+                      : (x) => x.post.year
+                  )
                   .map(({ id, post }) => (
-                    <PostN
+                    <Post
                       reference={id}
                       key={id.toString()}
                       username={post.username}
@@ -368,7 +1406,7 @@ function Moto({ items }) {
                   ))
             : items
                 .filter(
-                  model === "All"
+                  model === "All Models"
                     ? (x) => x.post.make == make
                     : (x) => x.post.make == make && x.post.model == model
                 )
@@ -378,8 +1416,28 @@ function Moto({ items }) {
                     : (x) =>
                         x.post.price >= minPrice && x.post.price <= maxPrice
                 )
+                .filter(
+                  fuelType !== "Fuel type"
+                    ? (x) => x.post.fuel === fuelType
+                    : (x) => x.post.fuel
+                )
+                .filter(
+                  gearbox !== "Gearbox"
+                    ? (x) => x.post.gearbox === gearbox
+                    : (x) => x.post.gearbox
+                )
+                .filter(
+                  minYear !== "Min year"
+                    ? (x) => x.post.year >= minYear
+                    : (x) => x.post.year
+                )
+                .filter(
+                  maxYear !== "Max year"
+                    ? (x) => x.post.year <= maxYear
+                    : (x) => x.post.year
+                )
                 .map(({ id, post }) => (
-                  <PostN
+                  <Post
                     reference={id}
                     key={id.toString()}
                     username={post.username}

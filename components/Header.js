@@ -5,14 +5,8 @@ import {
   RiRoadsterFill,
   RiTruckLine,
   RiSailboatLine,
-  RiLoginCircleLine,
 } from "react-icons/ri";
-import {
-  FaTractor,
-  FaShuttleVan,
-  FaCaravan,
-  FaRegUserCircle,
-} from "react-icons/fa";
+import { FaTractor, FaShuttleVan, FaCaravan } from "react-icons/fa";
 
 function Header() {
   const [session] = useSession();
@@ -33,7 +27,7 @@ function Header() {
           dealers
         </a>
 
-        <div className="flex text-2xl space-x-2 ">
+        <div className="flex text-2xl space-x-2">
           <RiEBikeFill
             className="cursor-pointer transition duration-100 transform hover:scale-125"
             onClick={() => router.push("/moto")}
@@ -65,18 +59,19 @@ function Header() {
         </div>
         <div className="flex items-center">
           {session ? (
-            <img
-              className="rounded-full h-8 cursor-pointer transition duration-150 transform hover:scale-110"
-              src={session.user.image}
-              onClick={signOut}
-            />
+            <>
+              <p className="hidden lg:block text-xs text-gray-500 mr-2">
+                {session.user.name}
+              </p>
+              <img
+                className="rounded-full h-8 cursor-pointer transition duration-150 transform hover:scale-110"
+                src={session.user.image}
+                onClick={signOut}
+              />
+            </>
           ) : (
-            /* <RiLoginCircleLine
-              className="text-2xl cursor-pointer transition duration-150 transform hover:scale-110"
-              onClick={signIn}
-            /> */
             <button
-              className=" text-sm text-gray-500 hover:bg-gray-100 leading-6 py-1 px-5 rounded-lg ring-1 ring-gray-100 ring-inset shadow-md"
+              className="text-sm text-gray-500 hover:bg-gray-100 leading-6 py-1 px-3 md:px-5 rounded-lg ring-1 ring-gray-100 ring-inset shadow-md"
               onClick={signIn}
             >
               Log in

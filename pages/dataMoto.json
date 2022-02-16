@@ -1,22 +1,22 @@
 [
   {
-    "name": "All",
-    "model": [{ "name": "All" }]
+    "name": "All Makes",
+    "model": [{ "name": "All Models" }]
   },
   {
     "name": "Aprilia",
-    "model": [{ "name": "All" }, { "name": "RS660" }]
+    "model": [{ "name": "All Models" }, { "name": "RS660" }]
   },
 
   {
     "name": "BMW",
-    "model": [{ "name": "All" }, { "name": "S1000RR" }]
+    "model": [{ "name": "All Models" }, { "name": "S1000RR" }]
   },
 
   {
     "name": "Ducati",
     "model": [
-      { "name": "All" },
+      { "name": "All Models" },
       { "name": "Desmosedici" },
       { "name": "Panigale" }
     ]
@@ -24,14 +24,22 @@
 
   {
     "name": "Honda",
-    "model": [{ "name": "All" }, { "name": "CBR1000RR" }, { "name": "Hornet" }]
+    "model": [
+      { "name": "All Models" },
+      { "name": "CBR1000RR" },
+      { "name": "Hornet" }
+    ]
   },
   {
     "name": "KTM",
-    "model": [{ "name": "All" }, { "name": "990SMT" }]
+    "model": [{ "name": "All Models" }, { "name": "990SMT" }]
   },
   {
     "name": "Suzuki",
-    "model": [{ "name": "All" }, { "name": "Burgman" }, { "name": "GSXR1000" }]
+    "model": [
+      { "name": "All Models" },
+      { "name": "Burgman" },
+      { "name": "GSXR1000" }
+    ]
   }
 ]

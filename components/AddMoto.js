@@ -143,7 +143,7 @@ function addMoto() {
     setDescription("");
   };
 
-  const gearboxType = ["Manuel", "Automatic", "Semi-automatic"];
+  const gearboxType = ["Manual", "Automatic", "Semi-automatic"];
   const fuelType = ["Petrol", "Diesel", "Electric", "Hybrid"];
   const coolingType = ["Liquid Cooled", "Air Cooled"];
 
