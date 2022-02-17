@@ -2,8 +2,11 @@ import { useState, Fragment } from "react";
 import Header from "../components/Header";
 import { db } from "/firebase";
 import dataMoto from "./dataMoto.json";
+import prices from "./dataPrices.json";
+import years from "./dataMinYears.json";
+import yearsMax from "./dataMaxYears.json";
 import { useSession } from "next-auth/client";
-import Post from "../components/Post";
+import Post from "../components/PostMoto";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import { MdArrowBackIosNew } from "react-icons/md";
@@ -20,6 +23,8 @@ function Moto({ items }) {
   const [gearbox, setGearbox] = useState("Gearbox");
   const [session] = useSession();
   const [showSidebar, setShowSidebar] = useState(false);
+  const fuelTypes = ["Fuel type", "Petrol", "Diesel", "Electric", "Hybrid"];
+  const gearboxType = ["Gearbox", "Manual", "Automatic"];
 
   function makeFilter(value) {
     setMake(value);
@@ -60,221 +65,6 @@ function Moto({ items }) {
     setGearbox(value);
   }
 
-  const prices = [
-    500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500,
-    7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500, 11000, 11500, 12000,
-    12500, 13000, 13500, 14000, 14500, 15000, 15500, 16000, 16500, 17000, 17500,
-    18000, 18500, 19000, 19500, 20000, 20500, 21000, 21500, 22000, 22500, 23000,
-    23500, 24000, 24500, 25000, 25500, 26000, 26500, 27000, 27500, 28000, 28500,
-    29000, 29500, 30000, 30500, 31000, 31500, 32000, 32500, 33000, 33500, 34000,
-    34500, 35000, 35500, 36000, 36500, 37000, 37500, 38000, 38500, 39000, 39500,
-    40000, 45000, 50000, 55000, 60000, 65000, 70000, 75000, 80000, 85000, 90000,
-    95000, 100000,
-  ];
-  const years = [
-    "Min year",
-    2022,
-    2021,
-    2020,
-    2019,
-    2018,
-    2017,
-    2016,
-    2015,
-    2014,
-    2013,
-    2012,
-    2011,
-    2010,
-    2009,
-    2008,
-    2007,
-    2006,
-    2005,
-    2004,
-    2003,
-    2002,
-    2001,
-    2000,
-    1999,
-    1998,
-    1997,
-    1996,
-    1995,
-    1994,
-    1993,
-    1992,
-    1991,
-    1990,
-    1989,
-    1988,
-    1987,
-    1986,
-    1985,
-    1984,
-    1983,
-    1982,
-    1981,
-    1980,
-    1979,
-    1978,
-    1977,
-    1976,
-    1975,
-    1974,
-    1973,
-    1972,
-    1971,
-    1970,
-    1969,
-    1968,
-    1967,
-    1966,
-    1965,
-    1964,
-    1963,
-    1962,
-    1961,
-    1960,
-    1959,
-    1958,
-    1957,
-    1956,
-    1955,
-    1954,
-    1953,
-    1952,
-    1951,
-    1950,
-    1949,
-    1948,
-    1947,
-    1946,
-    1945,
-    1944,
-    1943,
-    1942,
-    1941,
-    1940,
-    1939,
-    1938,
-    1937,
-    1936,
-    1935,
-    1934,
-    1933,
-    1932,
-    1931,
-    1930,
-  ];
-  const yearsMax = [
-    "Max year",
-    2022,
-    2021,
-    2020,
-    2019,
-    2018,
-    2017,
-    2016,
-    2015,
-    2014,
-    2013,
-    2012,
-    2011,
-    2010,
-    2009,
-    2008,
-    2007,
-    2006,
-    2005,
-    2004,
-    2003,
-    2002,
-    2001,
-    2000,
-    1999,
-    1998,
-    1997,
-    1996,
-    1995,
-    1994,
-    1993,
-    1992,
-    1991,
-    1990,
-    1989,
-    1988,
-    1987,
-    1986,
-    1985,
-    1984,
-    1983,
-    1982,
-    1981,
-    1980,
-    1979,
-    1978,
-    1977,
-    1976,
-    1975,
-    1974,
-    1973,
-    1972,
-    1971,
-    1970,
-    1969,
-    1968,
-    1967,
-    1966,
-    1965,
-    1964,
-    1963,
-    1962,
-    1961,
-    1960,
-    1959,
-    1958,
-    1957,
-    1956,
-    1955,
-    1954,
-    1953,
-    1952,
-    1951,
-    1950,
-    1949,
-    1948,
-    1947,
-    1946,
-    1945,
-    1944,
-    1943,
-    1942,
-    1941,
-    1940,
-    1940,
-    1939,
-    1938,
-    1937,
-    1936,
-    1935,
-    1934,
-    1933,
-    1932,
-    1931,
-    1930,
-  ];
-
-  const fuelTypeOption = [
-    "Fuel type",
-    "Petrol",
-    "Diesel",
-    "Electric",
-    "Hybrid",
-  ];
-
-  const gearboxType = ["Gearbox", "Manual", "Automatic", "Semi-automatic"];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -282,13 +72,13 @@ function Moto({ items }) {
         <div className="lg:hidden">
           {showSidebar ? (
             <MdArrowBackIosNew
-              className="h-8 w-8 ml-52 items-center cursor-pointer text-sky-500 fixed top-[50%] z-50 "
+              className="h-8 w-8 ml-52 items-center cursor-pointer text-sky-500 fixed inset-y-1/2 z-50 "
               onClick={() => setShowSidebar(!showSidebar)}
             />
           ) : (
             <MdArrowBackIosNew
               onClick={() => setShowSidebar(!showSidebar)}
-              className="fixed items-center cursor-pointer text-sky-500 top-[50%] h-12 w-12 pr-4 rotate-180 rounded-md -left-5 bg-white/75 shadow-md z-50"
+              className="fixed items-center cursor-pointer text-sky-500 inset-y-1/2 h-12 w-12 pr-4 rotate-180 rounded-md -left-5 bg-white/75 shadow-md z-50"
             />
           )}
 
@@ -297,7 +87,7 @@ function Moto({ items }) {
               showSidebar ? "" : "-translate-x-full"
             }`}
           >
-            <div className="w-44 fixed top-[30%] ml-2 2xl:ml-24 space-y-2">
+            <div className="w-44 fixed inset-y-1/3 ml-2 space-y-2">
               <Listbox value={make} onChange={makeFilter}>
                 <div className="relative mt-1">
                   <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
@@ -631,7 +421,7 @@ function Moto({ items }) {
                     leaveTo="opacity-0"
                   >
                     <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
-                      {fuelTypeOption.map((data, index) => (
+                      {fuelTypes.map((data, index) => (
                         <Listbox.Option
                           key={index}
                           className={({ active }) =>
@@ -1133,7 +923,7 @@ function Moto({ items }) {
                 leaveTo="opacity-0"
               >
                 <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
-                  {fuelTypeOption.map((data, index) => (
+                  {fuelTypes.map((data, index) => (
                     <Listbox.Option
                       key={index}
                       className={({ active }) =>

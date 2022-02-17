@@ -10,7 +10,6 @@ export default function Home() {
         <title>Dealers</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className="bg-white">
         <Header />
         <FirstBanner />

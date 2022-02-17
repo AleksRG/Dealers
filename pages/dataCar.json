@@ -1,0 +1,22 @@
+[
+  {
+    "name": "All Makes",
+    "model": [{ "name": "All Models" }]
+  },
+  {
+    "name": "Bugatti",
+    "model": [{ "name": "All Models" }, { "name": "Chiron" }]
+  },
+  {
+    "name": "Ferrari",
+    "model": [{ "name": "All Models" }, { "name": "SF90" }]
+  },
+  {
+    "name": "Tesla",
+    "model": [{ "name": "All Models" }, { "name": "Roadster" }]
+  },
+  {
+    "name": "Mercedes-Benz",
+    "model": [{ "name": "All Models" }, { "name": "190E" }]
+  }
+]
