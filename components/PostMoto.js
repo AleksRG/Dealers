@@ -24,6 +24,7 @@ function Post({
   location,
 }) {
   const router = useRouter();
+
   const seeMore = (reference) => {
     /* router.push(`/details/${reference}`); */
     window.open(`/moto/${reference}`);

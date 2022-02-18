@@ -9,7 +9,6 @@ import { RiTempColdLine } from "react-icons/ri";
 import { GiGearStickPattern } from "react-icons/gi";
 
 function Details({ product }) {
-  console.log(product.model);
   return (
     <div>
       <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
