@@ -123,10 +123,10 @@ function Post({
         <div className="px-2 mt-2 ml-auto col-start-1 row-start-3 self-center sm:ml-0 sm:mb-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-4 lg:col-start-1 lg:row-start-3 lg:row-end-4 ">
           <button
             type="button"
-            className="text-sm text-gray-500 hover:bg-gray-100 py-2 px-5 rounded-lg ring-1 ring-gray-100 ring-inset shadow-md"
+            className="text-sm flex text-gray-500 hover:bg-gray-100 py-2 px-5 rounded-lg ring-1 ring-gray-100 ring-inset shadow-md"
             onClick={(e) => seeMore(reference, e)}
           >
-            More info &rarr;
+            More info <p className="ml-1 text-sky-400">&rarr;</p>
           </button>
         </div>
         <p className="mt-2 px-2 text-sm leading-5 col-start-1 sm:col-span-2 lg:mt-4 lg:row-start-4 lg:col-span-1 text-gray-500 h-20 md:h-24 lg:h-44 overflow-hidden text-justify">

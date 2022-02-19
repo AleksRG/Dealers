@@ -1,11 +1,11 @@
 function FirstBanner() {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden ">
       <h1 className="font-satisfy p-4 font-bold mt-4 text-5xl m-auto text-center sm:mt-10">
         Bikes Cars Vans Trucks Farm Boats Caravans
       </h1>
 
-      <div className="mt-6 m-auto grid grid-flow-col grid-rows-2 grid-cols-3 gap-2 max-w-2xl">
+      <div className="mt-6 m-auto grid grid-flow-col grid-rows-2 grid-cols-3 gap-2 max-w-2xl ">
         <div className="transform scale-110 -rotate-6 w-60">
           <img
             className="rounded-xl"
