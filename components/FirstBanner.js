@@ -1,6 +1,6 @@
 function FirstBanner() {
   return (
-    <div className="overflow-hidden ">
+    <div className="overflow-hidden">
       <h1 className="font-satisfy p-4 font-bold mt-4 text-5xl m-auto text-center sm:mt-10">
         Bikes Cars Vans Trucks Farm Boats Caravans
       </h1>

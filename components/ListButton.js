@@ -6,7 +6,7 @@ function ListButton({ type, func, data }) {
   return (
     <Listbox value={type} onChange={func}>
       <div className="relative mt-1">
-        <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
+        <Listbox.Button className="relative w-44 py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white  focus-visible:ring-offset-2 text-sm ring-1 ring-gray-100 hover:bg-gray-100">
           <span className="block truncate">{type}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <ChevronDownIcon

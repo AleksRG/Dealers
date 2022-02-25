@@ -2,6 +2,7 @@ import { MdOutlineLocalGasStation } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { GiGearStickPattern, GiPathDistance } from "react-icons/gi";
 import { BiTachometer } from "react-icons/bi";
+import { BsDot } from "react-icons/bs";
 import { useRouter } from "next/router";
 
 function Post({
@@ -37,7 +38,7 @@ function Post({
             {make} {model}{" "}
           </h1>
           <p className="text-xs mt-2 mb-0.5 md:text-sm leading-4 font-semibold text-gray-900 ">
-            Selling price {price}£
+            Selling price £{price}
           </p>
         </div>
         <div className="grid gap-4 col-start-1 sm:px-2 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-1 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0">
@@ -69,54 +70,22 @@ function Post({
           </div>
           <dt className="sr-only">Location</dt>
           <div className="flex items-center">
-            <svg
-              width="2"
-              height="2"
-              aria-hidden="true"
-              fill="currentColor"
-              className="mx-3 text-blue-600"
-            >
-              <circle cx="1" cy="1" r="1" />
-            </svg>
+            <BsDot className="mx-2 text-blue-600 h-3 w-3" />
             <GiGearStickPattern className="h-5 w-5 " />
             <span>{gearbox}</span>
           </div>{" "}
           <div className="flex items-center">
-            <svg
-              width="2"
-              height="2"
-              aria-hidden="true"
-              fill="currentColor"
-              className="mx-3 text-blue-600"
-            >
-              <circle cx="1" cy="1" r="1" />
-            </svg>
+            <BsDot className="mx-2 text-blue-600 h-3 w-3" />
             <BiTachometer className="h-5 w-5 " />
             <span>{horsepower}hp</span>
           </div>
           <div className="flex items-center">
-            <svg
-              width="2"
-              height="2"
-              aria-hidden="true"
-              fill="currentColor"
-              className="mx-3 text-blue-600"
-            >
-              <circle cx="1" cy="1" r="1" />
-            </svg>
+            <BsDot className="mx-2 text-blue-600 h-3 w-3" />
             <GiPathDistance className="h-5 w-5 " />
             <span>{kilometers}km</span>
           </div>
           <div className="flex items-center">
-            <svg
-              width="2"
-              height="2"
-              aria-hidden="true"
-              fill="currentColor"
-              className="mx-3 text-blue-600"
-            >
-              <circle cx="1" cy="1" r="1" />
-            </svg>
+            <BsDot className="mx-2 text-blue-600 h-3 w-3" />
             <HiOutlineLocationMarker className="h-5 w-5 " />
             <span>{location}</span>
           </div>
