@@ -1,15 +1,15 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { db } from "/firebase";
-import dataCar from "./dataCar.json";
+import dataTruck from "./dataTruck.json";
 import prices from "./dataPrices.json";
 import years from "./dataMinYears.json";
 import yearsMax from "./dataMaxYears.json";
-import Post from "../components/PostCar";
+import Post from "../components/PostTruck";
 import ListButton from "../components/ListButton";
 import { MdArrowBackIosNew } from "react-icons/md";
 
-function Car({ items }) {
+function Moto({ items }) {
   const [make, setMake] = useState("All Makes");
   const [model, setModel] = useState("All Models");
   const [modelList, setModelList] = useState([]);
@@ -36,7 +36,7 @@ function Car({ items }) {
 
   function makeFilter(value) {
     setMake(value);
-    setModelList(dataCar.find((x) => x.name === value).model) || "All Models";
+    setModelList(dataTruck.find((x) => x.name === value).model) || "All Models";
     setModel("All Models");
     setMinPrice("Min price");
     setMaxPrice("Max price");
@@ -74,7 +74,7 @@ function Car({ items }) {
 
   return (
     <div className="min-h-screen">
-      <Header activ={"cars"} />
+      <Header activ="trucks" />
       <div className="max-w-[1800px] m-auto">
         <div className="lg:hidden">
           {showSidebar ? (
@@ -94,9 +94,8 @@ function Car({ items }) {
               showSidebar ? "" : "-translate-x-full"
             }`}
           >
-            {" "}
             <div className="w-44 fixed inset-y-1/3 ml-2 space-y-2">
-              <ListButton type={make} func={makeFilter} data={dataCar} />
+              <ListButton type={make} func={makeFilter} data={dataTruck} />
               <ListButton type={model} func={modelFilter} data={modelList} />
               <ListButton
                 type={minPrice}
@@ -148,7 +147,7 @@ function Car({ items }) {
           </div>
         </div>
         <div className="w-44 fixed top-16 ml-2 2xl:ml-24 space-y-2 hidden lg:block">
-          <ListButton type={make} func={makeFilter} data={dataCar} />
+          <ListButton type={make} func={makeFilter} data={dataTruck} />
           <ListButton type={model} func={modelFilter} data={modelList} />
           <ListButton
             type={minPrice}
@@ -259,10 +258,10 @@ function Car({ items }) {
     </div>
   );
 }
-export default Car;
+export default Moto;
 
 export async function getServerSideProps() {
-  const data = await db.collection("posts").get();
+  const data = await db.collection("trucks").get();
   return {
     props: {
       items: data.docs.map((doc) => ({

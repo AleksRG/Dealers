@@ -74,8 +74,8 @@ function Moto({ items }) {
 
   return (
     <div className="min-h-screen">
-      <Header />
-      <div className="max-w-[1800px]">
+      <Header activ="motors" />
+      <div className="max-w-[1800px] m-auto">
         <div className="lg:hidden">
           {showSidebar ? (
             <MdArrowBackIosNew
@@ -249,7 +249,6 @@ function Moto({ items }) {
                 kilometers={post.kilometers}
                 description={post.description}
                 gearbox={post.gearbox}
-                kilometers={post.kilometers}
                 fuel={post.fuel}
                 location={post.location}
               />

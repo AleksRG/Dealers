@@ -3,7 +3,6 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { GiGearStickPattern, GiPathDistance } from "react-icons/gi";
 import { BiTachometer } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
-import { useRouter } from "next/router";
 
 function Post({
   username,
@@ -24,11 +23,8 @@ function Post({
   fuel,
   location,
 }) {
-  const router = useRouter();
-
   function seeMore(reference) {
-    /* router.push(`/details/${reference}`); */
-    window.open(`/moto/${reference}`);
+    window.open(`/van/${reference}`);
   }
   return (
     <main className="pb-6 sm:p-6 md:py-6 md:px-2 border-b border-bluegray-100 max-w-6xl m-auto">
@@ -65,18 +61,17 @@ function Post({
         <div className="mt-4 px-2 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2 text-gray-500  overflow-auto scrollbar-hide">
           <dt className="sr-only">Reviews</dt>
           <div className="flex items-center">
-            <MdOutlineLocalGasStation className="h-5 w-5 " />
+            <MdOutlineLocalGasStation className="h-5 w-5" />
             <span>{fuel}</span>
           </div>
-          <dt className="sr-only">Location</dt>
           <div className="flex items-center">
             <BsDot className="mx-2 text-blue-600 h-3 w-3" />
-            <GiGearStickPattern className="h-5 w-5 " />
+            <GiGearStickPattern className="h-5 w-5" />
             <span>{gearbox}</span>
           </div>{" "}
           <div className="flex items-center">
             <BsDot className="mx-2 text-blue-600 h-3 w-3" />
-            <BiTachometer className="h-5 w-5 " />
+            <BiTachometer className="h-5 w-5" />
             <span>{horsepower}hp</span>
           </div>
           <div className="flex items-center">

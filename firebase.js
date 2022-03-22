@@ -17,6 +17,5 @@ const app =
 const auth = app.auth();
 const db = app.firestore();
 const storage = app.storage();
-/* const provider = new FacebookAuthProvider(); */
 
-export { db, auth, storage /* provider */ };
+export { db, auth, storage };

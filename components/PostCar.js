@@ -2,8 +2,8 @@ import { MdOutlineLocalGasStation } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { GiGearStickPattern, GiPathDistance } from "react-icons/gi";
 import { BiTachometer } from "react-icons/bi";
-import { useRouter } from "next/router";
 import { BsDot } from "react-icons/bs";
+
 function Post({
   username,
   make,
@@ -23,11 +23,9 @@ function Post({
   fuel,
   location,
 }) {
-  const router = useRouter();
-  const seeMore = (reference) => {
-    /* router.push(`/details/${reference}`); */
+  function seeMore(reference) {
     window.open(`/car/${reference}`);
-  };
+  }
   return (
     <main className="pb-6 sm:p-6 md:py-6 md:px-2 border-b border-bluegray-100 max-w-6xl m-auto">
       <div className="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-10 xl:gap-x-20 lg:grid-cols-2">
@@ -43,7 +41,7 @@ function Post({
           <img
             src={imageUrl}
             alt=""
-            className="w-full h-60 object-cover sm:rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
+            className="w-full  h-60 object-cover sm:rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
             loading="lazy"
           />
           <img
@@ -91,7 +89,7 @@ function Post({
           <button
             type="button"
             className="text-sm flex text-gray-500 hover:bg-gray-100 py-2 px-5 rounded-lg ring-1 ring-gray-100 ring-inset shadow-md"
-            onClick={(e) => seeMore(reference, e)}
+            onClick={() => seeMore(reference)}
           >
             More info <p className="ml-1 text-sky-400">&rarr;</p>
           </button>

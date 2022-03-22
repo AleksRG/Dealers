@@ -8,11 +8,9 @@ import { GiGearStickPattern, GiPathDistance } from "react-icons/gi";
 import { BiTachometer } from "react-icons/bi";
 
 function Details({ product }) {
-  console.log(product.model);
   return (
     <div>
       <Header />
-
       <Carousel product={product} />
       <div className="max-w-7xl m-auto px-2">
         <h1 className="text-xl md:text-3xl font-bold flex items-center">

@@ -17,7 +17,7 @@ function ProfileButton() {
               <div>
                 <Menu.Button>
                   <img
-                    className="rounded-full h-8 w-8 cursor-pointer mt-1.5 focus:outline-none bg-white ring-white focus-visible:ring-2 focus-visible:ring-white "
+                    className="rounded-full h-8 w-8 cursor-pointer mt-1.5 focus:outline-none bg-white ring-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                     src={session.user.image}
                   />
                 </Menu.Button>

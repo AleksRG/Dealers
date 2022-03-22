@@ -1,0 +1,20 @@
+[
+  {
+    "name": "All Makes",
+    "model": [{ "name": "All Models" }]
+  },
+
+  {
+    "name": "MAN",
+    "model": [{ "name": "All Models" }, { "name": "TGX 480" }]
+  },
+  {
+    "name": "Scania",
+    "model": [
+      { "name": "All Models" },
+      { "name": "R500" },
+      { "name": "R620" },
+      { "name": "R730" }
+    ]
+  }
+]

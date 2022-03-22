@@ -10,7 +10,7 @@ function ListButton({ type, func, data }) {
           <span className="block truncate">{type}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <ChevronDownIcon
-              className="w-5 h-5 text-gray-400"
+              className="w-5 h-5 text-sky-400"
               aria-hidden="true"
             />
           </span>
@@ -21,7 +21,7 @@ function ListButton({ type, func, data }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-60 ring-opacity-5 focus:outline-none text-sm scrollbar-hide">
+          <Listbox.Options className="relative w-full py-1 mt-1 overflow-auto bg-white rounded-lg shadow-lg max-h-40 ring-opacity-5 focus:outline-none text-sm scrollbar-hide ">
             {data.map((data, index) => (
               <Listbox.Option
                 key={index}
